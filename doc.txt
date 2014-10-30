@@ -1,0 +1,29 @@
+=======================================
+Representatie van het probleem
+=======================================
+Elke game moet geimporteerd worden. Hoe?
+-- kan door .txt file in te lezen. Hier moet wel een duidelijke structuur in zitten.
+
+In programma moet de game altijd gerepresenteerd worden:
+-- matrix met waarden als unique id? hoe moeten autos bewogen worden?
+direction van auto's bepalen? (mogelijk sneller)
+-- classes voor de autos met direction en coordinaten?(mogelijk zwaarder programma)
+-- muren moeten ook gerepresenteerd worden, evenals de uitgang.
+
+=======================================
+(Deel)oplossing(en) van het probleem
+=======================================
+Wat is een oplossing?
+--- reeks van stappen die leiden tot een oplossing (constraint statisfaction), niet per se optimaal
+--- reeks van stappen die leiden tot de optimale oplossing (minst aantal stappen)
+--- bijhouden van gamestates en/of acties 
+(bv. blauw auto naar boven -> groene auto naar rechts)
+
+Hoe kan het probleem opgelost worden (algoritme).
+--- DFS brute force. Wel controle of een gamestate al eerder in reeks voor is gekomen (onnodige stappen worden eruit gehaald). Alle oplossingen dan vergelijken en de optimale eruit krijgen.
+--- BFS, is een optie maar zal waarschijnlijk een heleboel geheugen vragen (zoekboom is enorm).
+
+Belangerijk:
+--- Gamestates bijhouden en vergelijken tijdens zoeken.
+--- de zet: heen en terug, moet ten allen tijden verboden worden (is een nutteloze stap), en mag dus niet opgenomen worden in de reeks
+--- 
