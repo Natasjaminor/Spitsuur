@@ -17,6 +17,18 @@ Testfile to test branches.
 
 
 
+<<<<<<< HEAD
+=======
+dit is yasmina.
+yasmina try 2
+>>>>>>> 68a792e1423d0da56d2d6e6c4af1fa0092ed7ab3
+
+
+
+
+
+
+<<<<<<< HEAD
 
 
 
@@ -24,4 +36,16 @@ Testfile to test branches.
 
 
 
+Rukshar in branch
 
+
+
+<<<<<<< HEAD
+=======
+Natasja heeft hier iets getypt jeej :D
+<<<<<<< HEAD
+>>>>>>> 2e13626a48daf262b4e0be16f29da1816463d242
+=======
+>>>>>>> 68a792e1423d0da56d2d6e6c4af1fa0092ed7ab3
+
+>>>>>>> 8a0e12eb4dbfb83e83112a0802883cc951e23e5c
