@@ -7,10 +7,7 @@ Testfile to test branches.
 
 
 
-
-
-
-
+<<<<<<< HEAD
 
 
 
@@ -19,3 +16,8 @@ Testfile to test branches.
 
 
 Rukshar in branch
+
+
+
+Natasja heeft hier iets getypt jeej :D
+>>>>>>> 2e13626a48daf262b4e0be16f29da1816463d242
