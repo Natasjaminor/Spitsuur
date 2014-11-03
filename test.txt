@@ -1,5 +1,11 @@
 test het
 hallo banana ik niks niks aangepast
 
+<<<<<<< HEAD
 Yasmina heeft dit gedaan.
 
+=======
+
+
+hoi hoi hoi hoi hoi
+>>>>>>> 501b79e45dc3675d47b12b35bdd6437fb18f24f1
