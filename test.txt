@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 test het, dit is een testversie van ons allebei
+=======
+test het
+hallo banana ik niks niks aangepast
+
+<<<<<<< HEAD
+Yasmina heeft dit gedaan.
+
+=======
+
+
+hoi hoi hoi hoi hoi
+>>>>>>> 501b79e45dc3675d47b12b35bdd6437fb18f24f1
+>>>>>>> f60291cb7eac07279a42d5884b55ee6d8e28501d
