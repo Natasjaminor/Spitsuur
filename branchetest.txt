@@ -1,6 +1,8 @@
 Testfile to test branches.
 
 
+dit is yasmina.
+
 
 
 
@@ -20,4 +22,8 @@ Rukshar in branch
 
 
 Natasja heeft hier iets getypt jeej :D
+<<<<<<< HEAD
 >>>>>>> 2e13626a48daf262b4e0be16f29da1816463d242
+=======
+
+>>>>>>> 8a0e12eb4dbfb83e83112a0802883cc951e23e5c
