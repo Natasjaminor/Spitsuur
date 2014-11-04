@@ -38,6 +38,7 @@ class Visualization:
 
 a = Visualization(300,300)
 
+<<<<<<< HEAD
 
 
 
@@ -127,5 +128,27 @@ def load_game(gamefilename):
 
 
 
+=======
+class Board:
+
+	def __init__(self, width, height, gamestate,exit_pos):
+		self.width = width
+		self.height = height
+		self.gamestate = gamestate
+		self.exit = exit_pos
+
+	def check_moveability(self,auto):
+		pass
+
+	def move_car(self, forward_or_backward):
+		# moves car in up/down (+1 or -1) in x or y, depending
+		# on the direction.
+		# forward_or_backward: integer -1 or 1
+		pass
+	
+	def save_gamestate(self):
+		# returns a gamestate dict
+		pass
+>>>>>>> becf960a6f91a5bcc7f9d995a644d8c180bec20c
 
 
