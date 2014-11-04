@@ -39,18 +39,30 @@ class Visualization:
 a = Visualization(300,300)
 
 class Board:
-
-	def __init__(self, width, height, gamestate,exit_pos):
+	"""
+	Represents a board with moveable car objects (auto) and an exit.
+	"""
+	def __init__(self, width, height, gamestate, exit_pos):
+		"""
+		Initializes the board with its 
+		"""
 		self.width = width
 		self.height = height
 		self.gamestate = gamestate
 		self.exit = exit_pos
 
-	def check_moveability(self,auto):
-		pass
+	def check_moveability(self, auto):
+		# returns an empty list when the car is immovable
+		# otherwise returns all directions the car 
+		# could move in in a list
+		if auto.get_direction() == 0:
+			# can the car go forward or backward vertically:
+			up = gamestate[auto][0][1] -1
+			if game
+
 
 	def move_car(self, forward_or_backward):
-		# moves car in up/down (+1 or -1) in x or y, depending
+		# moves car up/down (+1 or -1) in x or y, depending
 		# on the direction.
 		# forward_or_backward: integer -1 or 1
 		pass
