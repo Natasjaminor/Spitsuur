@@ -38,97 +38,6 @@ class Visualization:
 
 a = Visualization(300,300)
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Auto:
-    def __init__(self, width, height, color = None):
-        self.width = width
-        self.height = height
-        self.color = color
-
-        if self.width > self.height:
-            self.direction = 1 # 1 = horizontal
-        else:
-            self.directon = 0 # 0 = vertical
-        
-        def get_direction(self):
-            return self.direction
-
-def load_game(gamefilename):
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 class Board:
 
 	def __init__(self, width, height, gamestate,exit_pos):
@@ -149,6 +58,24 @@ class Board:
 	def save_gamestate(self):
 		# returns a gamestate dict
 		pass
->>>>>>> becf960a6f91a5bcc7f9d995a644d8c180bec20c
+
+class Auto:
+    def __init__(self, width, height, color = None):
+        self.width = width
+        self.height = height
+        self.color = color
+
+        if self.width > self.height:
+            self.direction = 1 # 1 = horizontal
+        else:
+            self.directon = 0 # 0 = vertical
+        
+        def get_direction(self):
+            return self.direction
+
+def load_game(gamefilename):
+
+
+
 
 
