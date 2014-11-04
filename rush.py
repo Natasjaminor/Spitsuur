@@ -115,14 +115,33 @@ class Board:
 					moves.append(-1)
 			if down != None:
 				if self.is_empty(up):
-				moves.append(1)
+					moves.append(1)
+		else:
+			# can the car go forward or backward horizontally:
+			front_pos = gamestate[auto][0] # Position object
+			end_pos = gamestate[auto][-1] # Position object
+			left = front_pos.get_left()
+			right = end_pos.get_right()
+			
+			if up != None:
+				if self.is_empty(left):
+					moves.append(-1)
+			if down != None:
+				if self.is_empty(right):
+					moves.append(1)
 
-	def move_car(self, forward_or_backward):
+		return moves
+
+	def move_car(self, auto, move):
 		# moves car up/down (+1 or -1) in x or y, depending
 		# on the direction.
-		# forward_or_backward: integer -1 or 1
+		# move: integer -1 or 1
 		# also changes the empty_pos set accordingly
-		pass
+
+		if auto.direction == 0:
+			if move == 1:
+				pos = gamestate[auto][-1]
+
 	
 	def save_gamestate(self):
 		# returns a gamestate dict
@@ -132,6 +151,11 @@ class Board:
 		return position in empty
 
 class Auto:
+	# TO DO:
+	# Misschien moeten we ze een id geven, zodat we ze beter uit elkaar kunnen halen.
+	# Dat moeten we dan ook in de input verwerken? of gwn oo volgorde van 
+	# alle natuurlijke getallen
+	
     def __init__(self, width, height, color = None):
         self.width = width
         self.height = height
@@ -148,6 +172,7 @@ class Auto:
 
 
 def load_game(gamefilename):
+	# TO DO:
 	# hier moet moet ook een set gemaakt worden met alle vlakken
 	# elke keer als een veld word ingenomen door een wagen wordt 
 	# deze uit de set verwijderd ---setnaam.remove((1,2))---
