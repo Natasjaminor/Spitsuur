@@ -38,6 +38,33 @@ class Visualization:
 
 a = Visualization(300,300)
 
+######### 
+# Maybe it is more convenient to have a class to make position objects
+# so it is easier to get coordinates?
+#########
+class Position:
+	def __init__(self,x,y):
+		self.x = x
+		self.y = y
+	def get_position(self):
+		return (self.x,self.y)
+	def get_x(self):
+		return self.x
+	def get_y(self):
+		return self.y
+	def __eq__(self,other):
+		return self.x == other.x and self.y == other.y
+	def __ne__(self,other):
+		return self.x != other.x or self.y != other.y
+	def __repr__(self):
+		return (self.x, self.y)
+
+# p1 = Position(1,2)
+# p2 = Position(2,2)
+
+# print p1 == p1, p1 == p2, p2 != p2, p1 != p2
+
+
 class Board:
 	"""
 	Represents a board with moveable car objects (auto) and an exit.
@@ -68,8 +95,9 @@ class Board:
 			# can the car go forward or backward vertically:
 			front_pos = gamestate[auto][0]
 			end_pos = gamestate[auto][-1]
-			if is_empty(up):
-				moves.add(-1)
+			up = (front_pos[0], front_pos[1])
+			# if up.is_empty(pos):
+				# moves.add(-1)
 
 	def move_car(self, forward_or_backward):
 		# moves car up/down (+1 or -1) in x or y, depending
@@ -99,14 +127,12 @@ class Auto:
         def get_direction(self):
             return self.direction
 
+
+
 def load_game(gamefilename):
-# hier moet moet ook een set gemaakt worden met alle vlakken
-# elke keer als een veld word ingenomen door een wagen wordt 
-# deze uit de set verwijderd ---setnaam.remove((1,2))---
-# en uiteindelijk hou je een set over met lege velden die dan
-# mee wordt gegeven aan het board
-
-
-
-
-
+	# hier moet moet ook een set gemaakt worden met alle vlakken
+	# elke keer als een veld word ingenomen door een wagen wordt 
+	# deze uit de set verwijderd ---setnaam.remove((1,2))---
+	# en uiteindelijk hou je een set over met lege velden die dan
+	# mee wordt gegeven aan het board
+	pass
