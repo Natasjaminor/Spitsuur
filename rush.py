@@ -88,7 +88,7 @@ class Board:
 	def check_moveability(self, auto):
 		# returns an empty list when the car is immovable
 		# otherwise returns all directions the car 
-		# could move in in a list
+		# could move in in a list maximum -1 and +1
 		moves = []
 
 		if auto.get_direction() == 0:
@@ -135,4 +135,6 @@ def load_game(gamefilename):
 	# deze uit de set verwijderd ---setnaam.remove((1,2))---
 	# en uiteindelijk hou je een set over met lege velden die dan
 	# mee wordt gegeven aan het board
+
+	## ook posities moeten een Position object worden en in die set worden gezet.
 	pass
