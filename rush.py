@@ -38,3 +38,94 @@ class Visualization:
 
 a = Visualization(300,300)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Auto:
+    def __init__(self, width, height, color = None):
+        self.width = width
+        self.height = height
+        self.color = color
+
+        if self.width > self.height:
+            self.direction = 1 # 1 = horizontal
+        else:
+            self.directon = 0 # 0 = vertical
+        
+        def get_direction(self):
+            return self.direction
+
+def load_game(gamefilename):
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
