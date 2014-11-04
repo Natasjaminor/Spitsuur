@@ -77,6 +77,14 @@ class Position:
 # print p1 == p1, p1 == p2, p2 != p2, p1 != p2
 
 
+
+#########
+# NOTE:
+# de gamestates opslaan als dictionary is handig maar er ontstaan problemen
+# wanneer de dicts in een set worden opgeslagen (sequentie van gamestates)
+# waarschijnlijk moeten we een andere manier vinden om het op te slaan
+# zodat de gamestates in een set kunnen worden opgeslagen...
+#########
 class Board:
 	"""
 	Represents a board with moveable car objects (auto) and an exit.
@@ -87,8 +95,9 @@ class Board:
 		gamestate,exit and emptyfields are stored.
 		width: integer
 		height: integer
-		gamestate: dictionary -> key: auto value: list of occupied positions (x,y).
-		empty_pos: set of positions(x,y) on the board that are empty.
+		gamestate: dictionary -> key; auto ,
+			value; list of occupied positions as Position.
+		empty_pos: set of Position objects on the board that are empty.
 
 		"""
 		self.width = width
@@ -142,10 +151,12 @@ class Board:
 			if move == 1:
 				pos = gamestate[auto][-1]
 
-	
 	def save_gamestate(self):
-		# returns a gamestate dict
-		pass
+		# TO DO:
+		# Wat is handiger:
+		# 1. Een heel bord kopieren en meegeven?
+		# 2. Alleen de dictionary meegeven?
+		return self.gamestate
 
 	def is_empty(self, position):
 		return position in empty
@@ -155,7 +166,7 @@ class Auto:
 	# Misschien moeten we ze een id geven, zodat we ze beter uit elkaar kunnen halen.
 	# Dat moeten we dan ook in de input verwerken? of gwn oo volgorde van 
 	# alle natuurlijke getallen
-	
+
     def __init__(self, width, height, color = None):
         self.width = width
         self.height = height
