@@ -38,6 +38,7 @@ class Visualization:
 
 a = Visualization(300,300)
 
+<<<<<<< HEAD
 
 gdfgjdfgdfg
 dh
@@ -45,3 +46,10 @@ dhdh
 dh
 dfhd
 h
+=======
+bnsdfjbsnbfnsfhbsbf
+sdbfsbfsbfmbsfmbsmnfb
+sdfsbdfmsbfbsfbsfbk
+sdnfbsmnfbmsbfmsbfmbsfmnbsf
+sdjfnmsbfmnsbfmsbf
+>>>>>>> 8b6a29d65c7339363ef7604bc9c4673de4a5897f
