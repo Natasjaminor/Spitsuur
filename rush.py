@@ -42,34 +42,48 @@ class Board:
 	"""
 	Represents a board with moveable car objects (auto) and an exit.
 	"""
-	def __init__(self, width, height, gamestate, exit_pos):
+	def __init__(self, width, height, gamestate, empty_pos, exit_pos):
 		"""
-		Initializes the board with its 
+		Initializes the board with its width,height. The initial
+		gamestate,exit and emptyfields are stored.
+		width: integer
+		height: integer
+		gamestate: dictionary -> key: auto value: list of occupied positions (x,y).
+		empty_pos: set of positions(x,y) on the board that are empty.
+
 		"""
 		self.width = width
 		self.height = height
 		self.gamestate = gamestate
 		self.exit = exit_pos
+		self.empty = empty_pos
 
 	def check_moveability(self, auto):
 		# returns an empty list when the car is immovable
 		# otherwise returns all directions the car 
 		# could move in in a list
+		moves = []
+
 		if auto.get_direction() == 0:
 			# can the car go forward or backward vertically:
-			up = gamestate[auto][0][1] -1
-			if game
-
+			front_pos = gamestate[auto][0]
+			end_pos = gamestate[auto][-1]
+			if is_empty(up):
+				moves.add(-1)
 
 	def move_car(self, forward_or_backward):
 		# moves car up/down (+1 or -1) in x or y, depending
 		# on the direction.
 		# forward_or_backward: integer -1 or 1
+		# also changes the empty_pos set accordingly
 		pass
 	
 	def save_gamestate(self):
 		# returns a gamestate dict
 		pass
+
+	def is_empty(self, position):
+		return position in empty
 
 class Auto:
     def __init__(self, width, height, color = None):
