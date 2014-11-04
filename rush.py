@@ -37,3 +37,9 @@ class Visualization:
         mainloop()
 
 a = Visualization(300,300)
+
+bnsdfjbsnbfnsfhbsbf
+sdbfsbfsbfmbsfmbsmnfb
+sdfsbdfmsbfbsfbsfbk
+sdnfbsmnfbmsbfmsbfmbsfmnbsf
+sdjfnmsbfmnsbfmsbf
