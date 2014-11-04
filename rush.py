@@ -86,6 +86,11 @@ class Auto:
             return self.direction
 
 def load_game(gamefilename):
+# hier moet moet ook een set gemaakt worden met alle vlakken
+# elke keer als een veld word ingenomen door een wagen wordt 
+# deze uit de set verwijderd ---setnaam.remove((1,2))---
+# en uiteindelijk hou je een set over met lege velden die dan
+# mee wordt gegeven aan het board
 
 
 
