@@ -52,6 +52,18 @@ class Position:
 		return self.x
 	def get_y(self):
 		return self.y
+	def get_up(self):
+		if self.y > 0
+			return Position(self.x,self.y-1)
+	def get_down(self):
+		if self.y > 0
+			return Position(self.x,self.y+1)
+	def get_left(self):
+		if self.x > 0
+			return Position(self.x-1,self.y)
+	def get_right(self):
+		if self.x > 0
+			return Position(self.x+1,self.y)
 	def __eq__(self,other):
 		return self.x == other.x and self.y == other.y
 	def __ne__(self,other):
@@ -93,11 +105,17 @@ class Board:
 
 		if auto.get_direction() == 0:
 			# can the car go forward or backward vertically:
-			front_pos = gamestate[auto][0]
-			end_pos = gamestate[auto][-1]
-			up = (front_pos[0], front_pos[1])
-			# if up.is_empty(pos):
-				# moves.add(-1)
+			front_pos = gamestate[auto][0] # Position object
+			end_pos = gamestate[auto][-1] # Position object
+			up = front_pos.get_up()
+			down = end_pos.get_down()
+			
+			if up != None:
+				if self.is_empty(up):
+					moves.append(-1)
+			if down != None:
+				if self.is_empty(up):
+				moves.append(1)
 
 	def move_car(self, forward_or_backward):
 		# moves car up/down (+1 or -1) in x or y, depending
