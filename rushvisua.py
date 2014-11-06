@@ -43,9 +43,6 @@ class BoardVisualization:
             x2, y2 = self._map_coords(width, i)
             self.canvas.create_line(x1, y1, x2, y2)
 
-    
-
-
 
     def _map_coords(self, x, y):
         "Maps grid positions to window positions (in pixels)."
