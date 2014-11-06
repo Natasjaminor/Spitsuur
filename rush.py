@@ -281,9 +281,10 @@ if __name__ == "__main__":
 	print "gs after: ", gs
 	print "em after: ", BB.empty
 	print len(BB.empty)
+	
 	# hier komt true uit terwijl dit niet true is
 	# hoe kunnen we dit fixen?
-	print gs == BB.get_gamestate() 
+	print"Are the gamestates the same?: ", gs == BB.get_gamestate() 
 
 
 
