@@ -139,19 +139,16 @@ class Auto:
      # Misschien moeten we ze een id geven, zodat we ze beter uit elkaar kunnen halen.
      # Dat moeten we dan ook in de input verwerken? of gwn oo volgorde van 
      # alle natuurlijke getallen
-
-    def __init__(self, width, height, color = None):
-        self.width = width
-        self.height = height
+    def __init__(self, direction, length, color = None):
+        self.length = length
+        self.direction = direction
         self.color = color
-        # given the fact that cars always have either a width or height of 1
-        if self.width > self.height:
-            self.direction = "h"
-        else:
-            self.directon = "v"
-        
-        def get_direction(self):
-            return self.direction
+    def get_direction(self):
+        return self.direction
+    def get_color(self):
+    	return self.color
+    def get_length(self):
+    	return self.length
 
 def assign_positions(auto, top_pos):
 	# retuns a list of position which are taken by the car
@@ -174,7 +171,7 @@ def load_yas(gamefilename):
     cars = []
     ##board = rushvisua.BoardVisualization(4,4)
 
-    for line in inputFile:
+    for line in inputFile[1:]:
         line_elements = line.strip()
         line_elements = line_elements.split(" ")
 
@@ -182,8 +179,10 @@ def load_yas(gamefilename):
         height = int(line_elements[1]) 
         x = int(line_elements[2]) 
         y = int(line_elements[3])
+        top_pos = Position()
         if line_elements[-1] == 'r'
         	color = 'red'
+        
         print width, height, x, y, color
        ## board._draw_cars(x,y,width,height, color)
     ##board.done()
