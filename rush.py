@@ -1,5 +1,5 @@
 
-import rushvisua
+# import rushvisua
 
 ######### 
 # Maybe it is more convenient to have a class to make position objects
@@ -18,16 +18,16 @@ class Position:
           return self.y
      def get_up(self):
         if self.y > 1:
-            return Position(self.x,self.y-1)
+            return Position(self.x,self.y-1,self.dimensions)
      def get_down(self):
           if self.y < self.dimensions:
-           return Position(self.x,self.y+1)
+           return Position(self.x,self.y+1,self.dimensions)
      def get_left(self):
           if self.x > 1 :
-           return Position(self.x-1,self.y)
+           return Position(self.x-1,self.y,self.dimensions)
      def get_right(self):
         if self.x < self.dimensions:
-            return Position(self.x+1,self.y)
+            return Position(self.x+1,self.y,self.dimensions)
      def change_position(self, pos):
      	self.x = pos.get_x()
      	self.y = pos.get_y()
@@ -36,7 +36,7 @@ class Position:
      def __ne__(self,other):
           return self.x != other.x or self.y != other.y
      def __repr__(self):
-          return (self.x,self.y)
+          return  str((self.x,self.y))
 
 
 #########
@@ -72,31 +72,31 @@ class Board:
 		moves = []
 
 		if auto.get_direction() == 0:
-		   # can the car go forward or backward vertically:
-		   front_pos = gamestate[auto][0] # Position object
-		   end_pos = gamestate[auto][-1] # Position object
-		   up = front_pos.get_up()
-		   down = end_pos.get_down()
+			# can the car go forward or backward vertically:
+			front_pos = gamestate[auto][0] # Position object
+			end_pos = gamestate[auto][-1] # Position object
+			up = front_pos.get_up()
+			down = end_pos.get_down()
 		   
 			if up != None:
-		        if self.is_empty(up):
-		             moves.append("up")
+				if self.is_empty(up):
+					moves.append("up")
 			if down != None:
 			    if self.is_empty(up):
-			         moves.append("down")
+					moves.append("down")
 		else:
-		   # can the car go forward or backward horizontally:
-		   front_pos = gamestate[auto][0] # Position object
-		   end_pos = gamestate[auto][-1] # Position object
-		   left = front_pos.get_left()
-		   right = end_pos.get_right()
+			# can the car go forward or backward horizontally:
+			front_pos = gamestate[auto][0] # Position object
+			end_pos = gamestate[auto][-1] # Position object
+			left = front_pos.get_left()
+			right = end_pos.get_right()
 		   
 			if up != None:
 			    if self.is_empty(left):
-			         moves.append("left")
+			        moves.append("left")
 			if down != None:
 			    if self.is_empty(right):
-			         moves.append("right")
+			        moves.append("right")
 
 		return moves
 
@@ -105,16 +105,16 @@ class Board:
 		# and the difference will be used to update all empty fields?
 	  	pass
 
-     def save_gamestate(self):
+	def save_gamestate(self):
 		# TO DO:
 		# Wat is handiger:
 		# 1. Een heel bord kopieren en meegeven?
 		# 2. Alleen de dictionary meegeven?
 		return self.gamestate
 
-     def is_empty(self, position):
-	    # Returns True if a position is empty, False if it is taken.
-        return position in empty
+	def is_empty(self, position):
+		# Returns True if a position is empty, False if it is taken.
+		return position in empty
 
 class Auto:
      # TO DO:
@@ -140,7 +140,7 @@ def assign_positions(auto, top_pos):
 		for i in range(auto.length-1):
 			p = pos_list[i]
 			pos_list.append(p.get_right())
-	else
+	else:
 		for i in range(auto.length-1):
 			p = pos_list[i]
 			pos_list.append(p.get_down())
@@ -157,29 +157,39 @@ def generate_all_positions(dimensions):
 
 def load_yas(gamefilename):
 	inputFile = open(gamefilename)
-    gamestate = {}
+	gamestate = {}
 
-    for line in inputFile:
-        line_elements = line.strip()
-        line_elements = line_elements.split(" ")
-        if line_elements[0] == '*':
-        	continue
-        elif line_elements[0] == '#'
-        	board_dimensions = int(line_elements[1])
-        else:
-        	direction = int(line_elements[0]) 
+	for line in inputFile:
+	    line_elements = line.strip()
+	    line_elements = line_elements.split(" ")
+	    if line_elements[0] == '*' or line_elements[0] == '':
+	    	continue
+	    elif line_elements[0] == '#':
+	    	board_dimensions = int(line_elements[1])
+	    	empty_pos = generate_all_positions(board_dimensions)
+	    else:
+	    	direction = line_elements[0] 
 	        length = int(line_elements[1]) 
 	        x = int(line_elements[2]) 
 	        y = int(line_elements[3])
-	        top_pos = Position()
-	        if line_elements[-1] == 'r'
-	        	color = 'red'
+	        top_pos = Position(x,y,board_dimensions)
+	        if line_elements[-1] == 'r':
+				color = 'red'
+				if board_dimensions%2 == 0:
+					exit = board_dimensions/2
+				else:
+					exit = board_dimensions/2 +1
+				exit_pos = Position(x,board_dimensions,board_dimensions)
 	        else:
 	        	color = None
 	        car = Auto(direction,length,color)
-	        gamestate[car] = assign_positions(\
-	        	car.get_direction(),top_pos)
-	return board_dimensions, gamestate, empty_pos
+	        taken_positions = assign_positions(car,top_pos)
+	        
+	        gamestate[car] = taken_positions
+	        for i in taken_positions:
+	        	empty_pos.remove(i)
+	print len(empty_pos)
+	return board_dimensions, gamestate, empty_pos, exit_pos
 
 def load_game(gamefilename):
     
@@ -211,6 +221,6 @@ def load_game(gamefilename):
         
     
 game = "game_new.txt"
-game_info = load_yas(game)
-
-board_test = Board(dimensions, gamestate, empty_pos, exit_pos)
+dim, gs, ep, ex = load_yas(game)
+print ep
+board_test = Board(dim, gs, ep, ex)
