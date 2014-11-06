@@ -16,38 +16,47 @@ class BoardVisualization:
         self.canvas = Canvas(self.master, width = 500, height = 500)
         self.canvas.pack()
         self.master.update()
-       
-        x1, y1 = self._map_coords(0, 0)
-        x2, y2 = self._map_coords(width, height)
-        print x1, y1, x2, y2
-        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "white")
 
+##               
+##        x1, y1 = self._map_coords(0, 0)
+##        x2, y2 = self._map_coords(width, height)
+##        print x1, y1, x2, y2
+##        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "white")
+
+        
         self.tiles = {}
         for i in range(width):
             for j in range(height):
-                x1, y1 = self._map_coords(i,j)
-                x2, y2 = self._map_coords(i + 1, j + 1)
-                self.tiles[(i,j)] = self.canvas.create_rectangle(x1, y1, x2, y2)
+                if i == width - 1 and j == (height/2) - 1:
+                    x2,y2 = self._map_coords(i,j)
+                else:
+                    x1, y1 = self._map_coords(i,j)
+                    x2, y2 = self._map_coords(i + 1, j + 1)
+                    self.tiles[(i,j)] = self.canvas.create_rectangle(x1, y1, x2, y2, fill = "white")
 
-        for i in range(width + 1):
+        for i in range(width):
             x1, y1 = self._map_coords(i, 0)
             x2, y2 = self._map_coords(i, height)
             self.canvas.create_line(x1, y1, x2, y2)
-        for i in range(height + 1):
+        for i in range(height+1):
             x1, y1 = self._map_coords(0, i)
             x2, y2 = self._map_coords(width, i)
             self.canvas.create_line(x1, y1, x2, y2)
 
+    
+
+
+
     def _map_coords(self, x, y):
         "Maps grid positions to window positions (in pixels)."
-        return (250 + 450 * ((x - self.width / 2.0) / self.max_dim),
-                250 + 450 * ((self.height / 2.0 - y) / self.max_dim))
+        return (250 + 450 * ((x-self.width / 2.0) / self.max_dim),
+                250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
-    def _draw_cars(self, x,y,width,height):
-        x1,y1 = self._map_coords(x-width,y-height)
-        x2,y2 = self._map_coords(x,y)
+    def _draw_cars(self, x,y,width,height, color):
+        x1,y1 = self._map_coords(x,y)
+        x2,y2 = self._map_coords(width+x,height+y)
         print x1, y1, x2, y2
-        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "blue")
+        self.canvas.create_rectangle(x1, y1, x2, y2, fill = color)
 
     def done(self):
         mainloop()

@@ -160,27 +160,23 @@ def load_game(gamefilename):
 
      ## ook posities moeten een Position object worden en in die set worden gezet.
 
-        inputFile = open(game)
-        cars = {}
+    inputFile = open(game)
+    cars = []
+    board = rushvisua.BoardVisualization(4,4)
 
-        for line in inputFile:
-                stripped_line = line.strip()
-                split_line = stripped_line.split(" ")
+    for line in inputFile:
+        aline = line.strip()
+        theline = aline.split(" ")
 
-                width = int(split_line[0]) 
-                height = int(split_line[1]) 
-                x = int(split_line[2]) 
-                y = int(split_line[3])
-                print width, height, x, y
-                a = Auto(width,height)
-                cars[a] = Position(x,y)
-                #print cars
-                #Ik kan de dict niet printen, en het heeft geen uniqueID,
-                #misschien toch de num_cars meegeven ofzo?
-                #En die autootjes worden nog niet goed geprint
-                board = rushvisua.BoardVisualization(4,4)
-                board._draw_cars(x,y,width,height)
-                board.done()
+        width = int(theline[0]) 
+        height = int(theline[1]) 
+        x = int(theline[2]) 
+        y = int(theline[3])
+        color = theline[4]
+        print width, height, x, y, color
+        board._draw_cars(x,y,width,height, color)
+    board.done()
         
+    
 game = "game.txt"
 load_game(game)
