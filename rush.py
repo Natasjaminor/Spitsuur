@@ -219,8 +219,10 @@ def load_game(gamefilename):
         board._draw_cars(x,y,width,height, color)
     board.done()
         
-    
-game = "game_new.txt"
-dim, gs, ep, ex = load_yas(game)
-print gs
-board_test = Board(dim, gs, ep, ex)
+if __name__ == "__main__":    
+	game = "game_new.txt"
+	dim, gs, ep, ex = load_yas(game)
+	print gs
+	board_test = Board(dim, gs, ep, ex)
+	for i in 
+	board_test.check_moveability
