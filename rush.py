@@ -224,5 +224,5 @@ if __name__ == "__main__":
 	dim, gs, ep, ex = load_yas(game)
 	print gs
 	board_test = Board(dim, gs, ep, ex)
-	for i in 
-	board_test.check_moveability
+	for i in gs:
+		print i, " : ", gs[i]
