@@ -6,37 +6,37 @@ import rushvisua
 # so it is easier to get coordinates?
 #########
 class Position:
-     def __init__(self,x,y,dimensions):
-          self.x = x
-          self.y = y
-          self.dimensions = dimensions
-     def get_position(self):
-          return (self.x,self.y)
-     def get_x(self):
-          return self.x
-     def get_y(self):
-          return self.y
-     def get_up(self):
+    def __init__(self,x,y,dimensions):
+        self.x = x
+        self.y = y
+        self.dimensions = dimensions
+    def get_position(self):
+        return (self.x,self.y)
+    def get_x(self):
+        return self.x
+    def get_y(self):
+        return self.y
+    def get_up(self):
         if self.y > 1:
             return Position(self.x,self.y-1)
-     def get_down(self):
-          if self.y < self.dimensions:
+    def get_down(self):
+        if self.y < self.dimensions:
            return Position(self.x,self.y+1)
-     def get_left(self):
-          if self.x > 1 :
+    def get_left(self):
+        if self.x > 1 :
            return Position(self.x-1,self.y)
-     def get_right(self):
+    def get_right(self):
         if self.x < self.dimensions:
             return Position(self.x+1,self.y)
-     def change_position(self, pos):
+    def change_position(self, pos):
      	self.x = pos.get_x()
      	self.y = pos.get_y()
-     def __eq__(self,other):
-          return self.x == other.x and self.y == other.y
-     def __ne__(self,other):
-          return self.x != other.x or self.y != other.y
-     def __repr__(self):
-          return (self.x,self.y)
+    def __eq__(self,other):
+        return self.x == other.x and self.y == other.y
+    def __ne__(self,other):
+        return self.x != other.x or self.y != other.y
+    def __repr__(self):
+        return (self.x,self.y)
 
 
 #########
@@ -71,32 +71,32 @@ class Board:
 	  # could move in in a list
 		moves = []
 
-		if auto.get_direction() == 0:
-		   # can the car go forward or backward vertically:
-		   front_pos = gamestate[auto][0] # Position object
-		   end_pos = gamestate[auto][-1] # Position object
-		   up = front_pos.get_up()
-		   down = end_pos.get_down()
-		   
-			if up != None:
-		        if self.is_empty(up):
-		             moves.append("up")
-			if down != None:
-			    if self.is_empty(up):
+        if auto.get_direction() == 0:
+        # can the car go forward or backward vertically:
+            front_pos = gamestate[auto][0] # Position object
+            end_pos = gamestate[auto][-1] # Position object
+            up = front_pos.get_up()
+            down = end_pos.get_down()
+
+            if up != None:
+                if self.is_empty(up):
+                    moves.append("up")
+            if down != None:
+			     if self.is_empty(up):
 			         moves.append("down")
-		else:
-		   # can the car go forward or backward horizontally:
-		   front_pos = gamestate[auto][0] # Position object
-		   end_pos = gamestate[auto][-1] # Position object
-		   left = front_pos.get_left()
-		   right = end_pos.get_right()
-		   
-			if up != None:
-			    if self.is_empty(left):
-			         moves.append("left")
-			if down != None:
-			    if self.is_empty(right):
-			         moves.append("right")
+        else:
+        # can the car go forward or backward horizontally:
+            front_pos = gamestate[auto][0] # Position object
+            end_pos = gamestate[auto][-1] # Position object
+            left = front_pos.get_left()
+            right = end_pos.get_right()
+
+            if up != None:
+                if self.is_empty(left):
+                    moves.append("left")
+            if down != None:
+                if self.is_empty(right):
+                    moves.append("right")
 
 		return moves
 
@@ -105,14 +105,14 @@ class Board:
 		# and the difference will be used to update all empty fields?
 	  	pass
 
-     def save_gamestate(self):
+    def save_gamestate(self):
 		# TO DO:
 		# Wat is handiger:
 		# 1. Een heel bord kopieren en meegeven?
 		# 2. Alleen de dictionary meegeven?
-		return self.gamestate
+        return self.gamestate
 
-     def is_empty(self, position):
+    def is_empty(self, position):
 	    # Returns True if a position is empty, False if it is taken.
         return position in empty
 
@@ -164,7 +164,7 @@ def load_yas(gamefilename):
         line_elements = line_elements.split(" ")
         if line_elements[0] == '*':
         	continue
-        elif line_elements[0] == '#'
+        elif line_elements[0] == '#':
         	board_dimensions = int(line_elements[1])
         else:
         	direction = int(line_elements[0]) 
@@ -172,7 +172,7 @@ def load_yas(gamefilename):
 	        x = int(line_elements[2]) 
 	        y = int(line_elements[3])
 	        top_pos = Position()
-	        if line_elements[-1] == 'r'
+	        if line_elements[-1] == 'r':
 	        	color = 'red'
 	        else:
 	        	color = None
