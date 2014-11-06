@@ -6,11 +6,10 @@ import rushvisua
 # so it is easier to get coordinates?
 #########
 class Position:
-     def __init__(self,x,y,max_x, max_y):
+     def __init__(self,x,y,dimensions):
           self.x = x
           self.y = y
-          self.max_x = max_x
-          self.max_y = max_y
+          self.dimensions = dimensions
      def get_position(self):
           return (self.x,self.y)
      def get_x(self):
@@ -21,13 +20,13 @@ class Position:
         if self.y > 1:
             return Position(self.x,self.y-1)
      def get_down(self):
-          if self.y < self.max_y:
+          if self.y < self.dimensions:
            return Position(self.x,self.y+1)
      def get_left(self):
           if self.x > 1 :
            return Position(self.x-1,self.y)
      def get_right(self):
-        if self.x < self.max_x:
+        if self.x < self.dimensions:
             return Position(self.x+1,self.y)
      def change_position(self, pos):
      	self.x = pos.get_x()
@@ -37,13 +36,7 @@ class Position:
      def __ne__(self,other):
           return self.x != other.x or self.y != other.y
      def __repr__(self):
-          return (self.x, self.y)
-
-# p1 = Position(1,2)
-# p2 = Position(2,2)
-
-# print p1 == p1, p1 == p2, p2 != p2, p1 != p2
-
+          return (self.x,self.y)
 
 
 #########
@@ -57,19 +50,17 @@ class Board:
 	"""
 	Represents a board with moveable car objects (auto) and an exit.
 	"""
-	def __init__(self, width, height, gamestate, empty_pos, exit_pos):
+	def __init__(self, dimensions, gamestate, empty_pos, exit_pos):
 	  """
-	  Initializes the board with its width,height. The initial
+	  Initializes the board with its dimensions. The initial
 	  gamestate,exit and emptyfields are stored.
-	  width: integer
-	  height: integer
+	  dimensions: integer
 	  gamestate: dictionary -> key; auto ,
 	       value; list of occupied positions as Position.
 	  empty_pos: set of Position objects on the board that are empty.
 
 	  """
-	  self.width = width
-	  self.height = height
+	  self.dimensions = dimensions
 	  self.gamestate = gamestate
 	  self.exit = exit_pos
 	  self.empty = empty_pos
@@ -125,15 +116,6 @@ class Board:
 	    # Returns True if a position is empty, False if it is taken.
         return position in empty
 
-
-
-######## TESTS
-
-R = Auto(2,1) 
-########
-
-
-
 class Auto:
      # TO DO:
      # Misschien moeten we ze een id geven, zodat we ze beter uit elkaar kunnen halen.
@@ -157,7 +139,7 @@ def assign_positions(auto, top_pos):
 	if auto.get_direction() == "h":
 		for i in range(auto.length-1):
 			p = pos_list[i]
-			pos_list.append(p.get_left())
+			pos_list.append(p.get_right())
 	else
 		for i in range(auto.length-1):
 			p = pos_list[i]
@@ -165,28 +147,39 @@ def assign_positions(auto, top_pos):
 
 	return pos_list
 
+def generate_all_positions(dimensions):
+	all_pos = []
+	for i in range(1,dimensions+1):
+		for j in range(1,dimensions+1):
+			all_pos.append(Position(i,j,dimensions))
+	return all_pos
+
 
 def load_yas(gamefilename):
 	inputFile = open(gamefilename)
-    cars = []
-    ##board = rushvisua.BoardVisualization(4,4)
+    gamestate = {}
 
-    for line in inputFile[1:]:
+    for line in inputFile:
         line_elements = line.strip()
         line_elements = line_elements.split(" ")
-
-        direction = int(line_elements[0]) 
-        height = int(line_elements[1]) 
-        x = int(line_elements[2]) 
-        y = int(line_elements[3])
-        top_pos = Position()
-        if line_elements[-1] == 'r'
-        	color = 'red'
-        
-        print width, height, x, y, color
-       ## board._draw_cars(x,y,width,height, color)
-    ##board.done()
-        
+        if line_elements[0] == '*':
+        	continue
+        elif line_elements[0] == '#'
+        	board_dimensions = int(line_elements[1])
+        else:
+        	direction = int(line_elements[0]) 
+	        length = int(line_elements[1]) 
+	        x = int(line_elements[2]) 
+	        y = int(line_elements[3])
+	        top_pos = Position()
+	        if line_elements[-1] == 'r'
+	        	color = 'red'
+	        else:
+	        	color = None
+	        car = Auto(direction,length,color)
+	        gamestate[car] = assign_positions(\
+	        	car.get_direction(),top_pos)
+	return board_dimensions, gamestate, empty_pos
 
 def load_game(gamefilename):
     
@@ -199,7 +192,7 @@ def load_game(gamefilename):
 
      ## ook posities moeten een Position object worden en in die set worden gezet.
 
-    inputFile = open(game)
+    inputFile = open(gamefilename)
     cars = []
     board = rushvisua.BoardVisualization(4,4)
 
@@ -217,5 +210,7 @@ def load_game(gamefilename):
     board.done()
         
     
-game = "game.txt"
-load_game(game)
+game = "game_new.txt"
+game_info = load_yas(game)
+
+board_test = Board(dimensions, gamestate, empty_pos, exit_pos)
