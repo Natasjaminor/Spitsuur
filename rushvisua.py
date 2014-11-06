@@ -17,12 +17,6 @@ class BoardVisualization:
         self.canvas.pack()
         self.master.update()
 
-##               
-##        x1, y1 = self._map_coords(0, 0)
-##        x2, y2 = self._map_coords(width, height)
-##        print x1, y1, x2, y2
-##        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "white")
-
         
         self.tiles = {}
         for i in range(width):
@@ -54,6 +48,10 @@ class BoardVisualization:
         x2,y2 = self._map_coords(width+x,height+y)
         print x1, y1, x2, y2
         self.canvas.create_rectangle(x1, y1, x2, y2, fill = color)
+
+    def update(self,board,car):
+        # changes coordinates of rectangle (car) if possible
+        # 
 
     def done(self):
         mainloop()
