@@ -51,7 +51,7 @@ class BoardVisualization:
 
     def update(self,board,car):
         # changes coordinates of rectangle (car) if possible
-        # 
+        
 
     def done(self):
         mainloop()
