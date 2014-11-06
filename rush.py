@@ -32,7 +32,6 @@ class Position:
      def change_position(self, pos):
      	self.x = pos.get_x()
      	self.y = pos.get_y()
-
      def __eq__(self,other):
           return self.x == other.x and self.y == other.y
      def __ne__(self,other):
@@ -78,7 +77,7 @@ class Board:
 	def check_moveability(self, auto):
 	  # returns an empty list when the car is immovable
 	  # otherwise returns all directions the car 
-	  # could move in in a list maximum -1 and +1
+	  # could move in in a list
 		moves = []
 
 		if auto.get_direction() == 0:
@@ -90,10 +89,10 @@ class Board:
 		   
 			if up != None:
 		        if self.is_empty(up):
-		             moves.append(-1)
+		             moves.append("up")
 			if down != None:
 			    if self.is_empty(up):
-			         moves.append(1)
+			         moves.append("down")
 		else:
 		   # can the car go forward or backward horizontally:
 		   front_pos = gamestate[auto][0] # Position object
@@ -103,10 +102,10 @@ class Board:
 		   
 			if up != None:
 			    if self.is_empty(left):
-			         moves.append(-1)
+			         moves.append("left")
 			if down != None:
 			    if self.is_empty(right):
-			         moves.append(1)
+			         moves.append("right")
 
 		return moves
 
@@ -126,8 +125,6 @@ class Board:
 	    # Returns True if a position is empty, False if it is taken.
         return position in empty
 
-     #def position_on_board(self,pos):
-         #if within width and height then on board
 
 
 ######## TESTS
@@ -147,11 +144,11 @@ class Auto:
         self.width = width
         self.height = height
         self.color = color
-        # given the fact that cars  always have either a width or height of 1
+        # given the fact that cars always have either a width or height of 1
         if self.width > self.height:
-            self.direction = 1 # 1 = horizontal
+            self.direction = "h"
         else:
-            self.directon = 0 # 0 = vertical
+            self.directon = "v"
         
         def get_direction(self):
             return self.direction
@@ -160,8 +157,16 @@ def assign_positions(auto, top_pos):
 	# retuns a list of position which are taken by the car
 	# starting from the top left position the car stands on
 	pos_list = [top_pos]
-	if auto.get_direction() == 1:
-		for range(auto.width):
+	if auto.get_direction() == "h":
+		for i in range(auto.length-1):
+			p = pos_list[i]
+			pos_list.append(p.get_left())
+	else
+		for i in range(auto.length-1):
+			p = pos_list[i]
+			pos_list.append(p.get_down())
+
+	return pos_list
 
 
 
