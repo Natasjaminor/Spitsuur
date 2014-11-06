@@ -6,9 +6,11 @@ import rushvisua
 # so it is easier to get coordinates?
 #########
 class Position:
-     def __init__(self,x,y):
+     def __init__(self,x,y,max_x, max_y):
           self.x = x
           self.y = y
+          self.max_x = max_x
+          self.max_y = max_y
      def get_position(self):
           return (self.x,self.y)
      def get_x(self):
@@ -16,17 +18,21 @@ class Position:
      def get_y(self):
           return self.y
      def get_up(self):
-        if self.y > 0:
+        if self.y > 1:
             return Position(self.x,self.y-1)
      def get_down(self):
-          if self.y > 0:
+          if self.y < self.max_y:
            return Position(self.x,self.y+1)
      def get_left(self):
-          if self.x > 0:
+          if self.x > 1 :
            return Position(self.x-1,self.y)
      def get_right(self):
-        if self.x > 0:
+        if self.x < self.max_x:
             return Position(self.x+1,self.y)
+     def change_position(self, pos):
+     	self.x = pos.get_x()
+     	self.y = pos.get_y()
+
      def __eq__(self,other):
           return self.x == other.x and self.y == other.y
      def __ne__(self,other):
@@ -104,15 +110,10 @@ class Board:
 
 		return moves
 
-	def move_car(self, auto, move):
-	  # moves car up/down (+1 or -1) in x or y, depending
-	  # on the direction.
-	  # move: integer -1 or 1
-	  # also changes the empty_pos set accordingly
-
-		if auto.direction == 0:
-			if move == 1:
-				pos = gamestate[auto][-1]
+	def move_car(self, auto, pos_list):
+		# Changes position of car in gamestate dictionary to the pos_list given
+		# and the difference will be used to update all empty fields?
+	  	pass
 
      def save_gamestate(self):
 		# TO DO:
@@ -128,6 +129,14 @@ class Board:
      #def position_on_board(self,pos):
          #if within width and height then on board
 
+
+######## TESTS
+
+R = Auto(2,1) 
+########
+
+
+
 class Auto:
      # TO DO:
      # Misschien moeten we ze een id geven, zodat we ze beter uit elkaar kunnen halen.
@@ -138,7 +147,7 @@ class Auto:
         self.width = width
         self.height = height
         self.color = color
-
+        # given the fact that cars  always have either a width or height of 1
         if self.width > self.height:
             self.direction = 1 # 1 = horizontal
         else:
@@ -146,6 +155,14 @@ class Auto:
         
         def get_direction(self):
             return self.direction
+
+def assign_positions(auto, top_pos):
+	# retuns a list of position which are taken by the car
+	# starting from the top left position the car stands on
+	pos_list = [top_pos]
+	if auto.get_direction() == 1:
+		for range(auto.width):
+
 
 
 
