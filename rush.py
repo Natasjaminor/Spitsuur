@@ -38,9 +38,13 @@ class Position:
 	def __ne__(self,other):
 		if other == None:
 			return True
-		return self.x != other.x or self.y != other.y
+		return not(self.x == other.x and self.y == other.y)
 	def __repr__(self):
 		return  str((self.x,self.y))
+	def __hash__(self):
+        return hash((self.x,self.y)
+
+
 
 
 #########
@@ -163,10 +167,12 @@ class Auto:
     	return self.color
     def get_length(self):
     	return self.length
-    # def __eq__(self, other):
-    # 	return self.ID == other.ID
-    # def __ne__(self,other):
-    # 	return self.ID != other.ID
+    def __eq__(self, other):
+    	return self.ID == other.ID
+    def __ne__(self,other):
+    	return self.ID != other.ID
+    def __hash__(self):
+        return hash(self.ID)
     def __repr__(self):
     	return "AUTO-ID("+ str(self.ID)+ ")"
 
@@ -273,8 +279,13 @@ if __name__ == "__main__":
 	print "empty before: ", em
 	print len(em)
 	moved_dict = {}
+	m1 ={}
+	m2 = {}
+	c = 1
 	for i in BB.gamestate:
 		car = i
+		m1[car] = c
+		m2[car] = c+1
 		moves = BB.check_moveability(car)
 		BB.move_auto(car,moves[0])
 		
@@ -284,7 +295,8 @@ if __name__ == "__main__":
 	
 	# hier komt true uit terwijl dit niet true is
 	# hoe kunnen we dit fixen?
-	print"Are the gamestates the same?: ", gs == BB.get_gamestate() 
+	print "Are the gamestates the same?: ", gs == BB.get_gamestate() 
+	print m1 == m2
 
 
 
