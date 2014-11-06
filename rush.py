@@ -122,7 +122,7 @@ class Board:
 		return self.gamestate
 
      def is_empty(self, position):
-	    Returns True if a position is empty, False if it is taken.
+	    # Returns True if a position is empty, False if it is taken.
         return position in empty
 
      #def position_on_board(self,pos):
