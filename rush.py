@@ -169,7 +169,25 @@ def assign_positions(auto, top_pos):
 	return pos_list
 
 
+def load_yas(gamefilename):
+	inputFile = open(gamefilename)
+    cars = []
+    ##board = rushvisua.BoardVisualization(4,4)
 
+    for line in inputFile:
+        line_elements = line.strip()
+        line_elements = line_elements.split(" ")
+
+        direction = int(line_elements[0]) 
+        height = int(line_elements[1]) 
+        x = int(line_elements[2]) 
+        y = int(line_elements[3])
+        if line_elements[-1] == 'r'
+        	color = 'red'
+        print width, height, x, y, color
+       ## board._draw_cars(x,y,width,height, color)
+    ##board.done()
+        
 
 def load_game(gamefilename):
     
