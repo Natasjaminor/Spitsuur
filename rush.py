@@ -16,17 +16,17 @@ class Position:
      def get_y(self):
           return self.y
      def get_up(self):
-                if self.y > 0:
-                        return Position(self.x,self.y-1)
+        if self.y > 0:
+            return Position(self.x,self.y-1)
      def get_down(self):
           if self.y > 0:
-               return Position(self.x,self.y+1)
+           return Position(self.x,self.y+1)
      def get_left(self):
           if self.x > 0:
-               return Position(self.x-1,self.y)
+           return Position(self.x-1,self.y)
      def get_right(self):
-                if self.x > 0:
-                        return Position(self.x+1,self.y)
+        if self.x > 0:
+            return Position(self.x+1,self.y)
      def __eq__(self,other):
           return self.x == other.x and self.y == other.y
      def __ne__(self,other):
@@ -49,81 +49,81 @@ class Position:
 # zodat de gamestates in een set kunnen worden opgeslagen...
 #########
 class Board:
-     """
-     Represents a board with moveable car objects (auto) and an exit.
-     """
-     def __init__(self, width, height, gamestate, empty_pos, exit_pos):
-          """
-          Initializes the board with its width,height. The initial
-          gamestate,exit and emptyfields are stored.
-          width: integer
-          height: integer
-          gamestate: dictionary -> key; auto ,
-               value; list of occupied positions as Position.
-          empty_pos: set of Position objects on the board that are empty.
+	"""
+	Represents a board with moveable car objects (auto) and an exit.
+	"""
+	def __init__(self, width, height, gamestate, empty_pos, exit_pos):
+	  """
+	  Initializes the board with its width,height. The initial
+	  gamestate,exit and emptyfields are stored.
+	  width: integer
+	  height: integer
+	  gamestate: dictionary -> key; auto ,
+	       value; list of occupied positions as Position.
+	  empty_pos: set of Position objects on the board that are empty.
 
-          """
-          self.width = width
-          self.height = height
-          self.gamestate = gamestate
-          self.exit = exit_pos
-          self.empty = empty_pos
+	  """
+	  self.width = width
+	  self.height = height
+	  self.gamestate = gamestate
+	  self.exit = exit_pos
+	  self.empty = empty_pos
 
-     def check_moveability(self, auto):
-          # returns an empty list when the car is immovable
-          # otherwise returns all directions the car 
-          # could move in in a list maximum -1 and +1
-          moves = []
+	def check_moveability(self, auto):
+	  # returns an empty list when the car is immovable
+	  # otherwise returns all directions the car 
+	  # could move in in a list maximum -1 and +1
+		moves = []
 
-          if auto.get_direction() == 0:
-               # can the car go forward or backward vertically:
-               front_pos = gamestate[auto][0] # Position object
-               end_pos = gamestate[auto][-1] # Position object
-               up = front_pos.get_up()
-               down = end_pos.get_down()
-               
-               if up != None:
-                    if self.is_empty(up):
-                         moves.append(-1)
-               if down != None:
-                    if self.is_empty(up):
-                         moves.append(1)
-          else:
-               # can the car go forward or backward horizontally:
-               front_pos = gamestate[auto][0] # Position object
-               end_pos = gamestate[auto][-1] # Position object
-               left = front_pos.get_left()
-               right = end_pos.get_right()
-               
-               if up != None:
-                    if self.is_empty(left):
-                         moves.append(-1)
-               if down != None:
-                    if self.is_empty(right):
-                         moves.append(1)
+		if auto.get_direction() == 0:
+		   # can the car go forward or backward vertically:
+		   front_pos = gamestate[auto][0] # Position object
+		   end_pos = gamestate[auto][-1] # Position object
+		   up = front_pos.get_up()
+		   down = end_pos.get_down()
+		   
+			if up != None:
+		        if self.is_empty(up):
+		             moves.append(-1)
+			if down != None:
+			    if self.is_empty(up):
+			         moves.append(1)
+		else:
+		   # can the car go forward or backward horizontally:
+		   front_pos = gamestate[auto][0] # Position object
+		   end_pos = gamestate[auto][-1] # Position object
+		   left = front_pos.get_left()
+		   right = end_pos.get_right()
+		   
+			if up != None:
+			    if self.is_empty(left):
+			         moves.append(-1)
+			if down != None:
+			    if self.is_empty(right):
+			         moves.append(1)
 
-          return moves
+		return moves
 
-     def move_car(self, auto, move):
-          # moves car up/down (+1 or -1) in x or y, depending
-          # on the direction.
-          # move: integer -1 or 1
-          # also changes the empty_pos set accordingly
+	def move_car(self, auto, move):
+	  # moves car up/down (+1 or -1) in x or y, depending
+	  # on the direction.
+	  # move: integer -1 or 1
+	  # also changes the empty_pos set accordingly
 
-          if auto.direction == 0:
-               if move == 1:
-                    pos = gamestate[auto][-1]
+		if auto.direction == 0:
+			if move == 1:
+				pos = gamestate[auto][-1]
 
      def save_gamestate(self):
-          # TO DO:
-          # Wat is handiger:
-          # 1. Een heel bord kopieren en meegeven?
-          # 2. Alleen de dictionary meegeven?
-          return self.gamestate
+		# TO DO:
+		# Wat is handiger:
+		# 1. Een heel bord kopieren en meegeven?
+		# 2. Alleen de dictionary meegeven?
+		return self.gamestate
 
      def is_empty(self, position):
-            # Zijn dit de empty tiles?
-          return position in empty
+	    Returns True if a position is empty, False if it is taken.
+        return position in empty
 
      #def position_on_board(self,pos):
          #if within width and height then on board
