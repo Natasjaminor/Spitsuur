@@ -3,7 +3,7 @@
 * if it is the red car.
 * ex: h 2 1 3 r --the red car always horizonal, on y position = y of exit
 * ex: v 3 3 5 -- just a normal car
-* the first line always starts with # and will have the board dimension 3
+* the first line always will have the board dimension 3
 * ex first line: # 3 -- means a 3x3 board
 
 
