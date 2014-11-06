@@ -71,7 +71,7 @@ class Board:
 	  # could move in in a list
 		moves = []
 
-		if auto.get_direction() == 0:
+		if auto.get_direction() == "v":
 			# can the car go forward or backward vertically:
 			front_pos = gamestate[auto][0] # Position object
 			end_pos = gamestate[auto][-1] # Position object
@@ -222,5 +222,5 @@ def load_game(gamefilename):
     
 game = "game_new.txt"
 dim, gs, ep, ex = load_yas(game)
-print ep
+print gs
 board_test = Board(dim, gs, ep, ex)
