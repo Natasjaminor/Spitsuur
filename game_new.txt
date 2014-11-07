@@ -6,8 +6,8 @@
 * the first line always will have # followed by the board dimension 3
 * ex first line: # 3 -- means a 3x3 board
 # 5
-h 2 0 3 red
-v 2 3 3
-h 3 2 5
+h 2 0 2 red
 h 3 1 0
+v 2 3 2
+h 3 2 4
 
