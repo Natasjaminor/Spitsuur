@@ -42,7 +42,8 @@ class Position:
 	def __repr__(self):
 		return  str((self.x,self.y))
 	def __hash__(self):
-            return hash((self.x,self.y))
+		return hash((self.x,self.y))
+
 
 
 
@@ -226,7 +227,7 @@ def load_yas(gamefilename):
 					exit = board_dimensions/2
 				else:
 					exit = board_dimensions/2 +1
-				exit_pos = Position(x,board_dimensions,board_dimensions)
+				exit_pos = Position(x,exit,board_dimensions)
 	        else:
 	        	color = None
 	        car_id += 1
