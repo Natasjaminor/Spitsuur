@@ -5,47 +5,6 @@
 
 # import rushvisua
 
-######### 
-# Maybe it is more convenient to have a class to make position objects
-# so it is easier to get coordinates?
-#########
-class Position(object):
-	def __init__(self,x,y,dimensions):
-	  self.x = x
-	  self.y = y
-	  self.dimensions = dimensions
-	def get_position(self):
-		return (self.x,self.y)
-	def get_x(self):
-		return self.x
-	def get_y(self):
-		return self.y
-	def get_up(self):
-		if self.y > 0:
-		    return Position(self.x,self.y-1,self.dimensions)
-	def get_down(self):
-		if self.y < self.dimensions -1:
-			return Position(self.x,self.y+1,self.dimensions)
-	def get_left(self):
-		if self.x > 0 :
-			return Position(self.x-1,self.y,self.dimensions)
-	def get_right(self):
-		if self.x < self.dimensions -1:
-		    return Position(self.x+1,self.y,self.dimensions)
-	def change_position(self, pos):
-		self.x = pos.get_x()
-		self.y = pos.get_y()
-	def __eq__(self,other):
-		if other == None:
-			return False
-		return self.x == other.x and self.y == other.y
-	def __ne__(self,other):
-		if other == None:
-			return True
-		return not(self.x == other.x and self.y == other.y)
-	def __repr__(self):
-		return  str((self.x,self.y))
-
 
 #########
 # NOTE:
@@ -73,64 +32,78 @@ class Board(object):
 	  self.exit = exit_pos
 	  self.empty = empty_pos
 
+	def get_up(self, pos):
+		posx = pos[0]
+		posy = pos[1]
+		if posy > 0:
+			return (posx,posy-1)
+	def get_down(self, pos):
+		posx = pos[0]
+		posy = pos[1]
+		if posy < self.dimensions -1: ###########
+			return (posx,posy+1)
+	def get_left(self, pos):
+		posx = pos[0]
+		posy = pos[1]
+		if posx > 0:
+			return (posx-1,posy)
+	def get_right(self, pos):
+		posx = pos[0]
+		posy = pos[1]
+		if posx > self.dimensions -1:
+			return (posx+1,posy)
+
 	def check_moveability(self, auto):
 	  # returns an empty list when the car is immovable
 	  # otherwise returns all top-left positions 
 	  # the car could take (first position)
 	  # in a list
 		new_top_pos_list = []
-
+		front = self.gamestate[auto][0]
+		end = self.gamestate[auto][-1]
 		if auto.get_direction() == "v":
-			# can the car go forward or backward vertically:
-			front_pos = self.gamestate[auto][0] # Position object
-			end_pos = self.gamestate[auto][-1] # Position object
-			up = front_pos.get_up()
-			down = end_pos.get_down()
-		   
+			up = self.get_up(front)
+			down = self.get_down(end)
 			if up != None:
 				if self.is_empty(up):
 					new_top_pos_list.append(up)
 			if down != None:
 			    if self.is_empty(down):
-					new_top_pos_list.append(front_pos.get_down())
+					new_top_pos_list.append(self.get_down(front))
 		else:
-			# can the car go forward or backward horizontally:
-			front_pos = self.gamestate[auto][0] # Position object
-			end_pos = self.gamestate[auto][-1] # Position object
-			left = front_pos.get_left()
-			right = end_pos.get_right()
-		    
+			left = self.get_left(front)
+			right = self.get_right(end)
 			if left != None:
-			    if self.is_empty(left):
-			        new_top_pos_list.append(left)
+				if self.is_empty(left):
+					new_top_pos_list.append(left)
 			if right != None:
 			    if self.is_empty(right):
-			        new_top_pos_list.append(front_pos.get_right())
+					new_top_pos_list.append(self.get_right(front))
 
 		return new_top_pos_list
 	
-	def get_new_positions(self, auto, top_pos):
+	def get_new_positions(self, auto, new_top_pos):
 		# retuns a list of position which are taken by the car
 		# starting from the top left position the car stands on
-		pos_list = [top_pos]
+		pos_list = [new_top_pos]
 		if auto.get_direction() == "h":
 			for i in range(auto.length-1):
 				p = pos_list[i]
-				pos_list.append(p.get_right())
+				pos_list.append((p[0]+1,p[1]))
 		else:
 			for i in range(auto.length-1):
 				p = pos_list[i]
-				pos_list.append(p.get_down())
+				pos_list.append((p[0],p[1]+1))
 
 		return pos_list
 
-	def move_auto(self, auto, top_pos):
+	def move_auto(self, auto, new_top_pos):
 		# Changes position of car in gamestate dictionary to the pos_list given
 		# and the difference will be used to update all empty fields?
 		# top_pos : new top-left position for the car
 		gamestate = self.gamestate.copy()
 		old_pos = gamestate[auto]
-		new_pos = self.get_new_positions(auto,top_pos)
+		new_pos = self.get_new_positions(auto,new_top_pos)
 		
 		new_empty = list(self.empty)
 		# self.gamestate[auto] = new_pos
@@ -146,15 +119,16 @@ class Board(object):
 		return Board(self.dimensions, gamestate, new_empty, self.exit)
 
 	def get_gamestate(self):
-		# TO DO:
-		# Wat is handiger:
-		# 1. Een heel bord kopieren en meegeven?
-		# 2. Alleen de dictionary meegeven?
 		return self.gamestate
 
 	def is_empty(self, pos):
 		# Returns True if a position is empty, False if it is taken.
 		return pos in self.empty
+	def __eq__(self,other):
+		return self.gamestate == other.gamestate
+	def __hash__(self):
+		pass
+
 
 class Auto:
      # TO DO:
@@ -189,11 +163,11 @@ def assign_positions(auto, top_pos):
 	if auto.get_direction() == "h":
 		for i in range(auto.length-1):
 			p = pos_list[i]
-			pos_list.append(p.get_right())
+			pos_list.append((p[0]+1,p[1])) ###
 	else:
 		for i in range(auto.length-1):
 			p = pos_list[i]
-			pos_list.append(p.get_down())
+			pos_list.append((p[0],p[1]+1)) ####
 
 	return pos_list
 
@@ -201,7 +175,7 @@ def generate_all_positions(dimensions):
 	all_pos = []
 	for i in range(dimensions):
 		for j in range(dimensions):
-			all_pos.append(Position(i,j,dimensions))
+			all_pos.append((i,j))
 	return all_pos
 
 
@@ -224,14 +198,14 @@ def load_game(gamefilename):
 	        length = int(line_elements[1]) 
 	        x = int(line_elements[2]) 
 	        y = int(line_elements[3])
-	        top_pos = Position(x,y,board_dimensions)
+	        top_pos = (x,y)
 	        if line_elements[-1] == 'red':
 				color = 'red'
 				if board_dimensions%2 == 0:
 					exit = board_dimensions/2
 				else:
 					exit = board_dimensions/2 +1
-				exit_pos = Position(x,exit,board_dimensions)
+				exit_pos = (x,exit)
 	        else:
 	        	color = None
 	        car_id += 1
@@ -282,19 +256,36 @@ if __name__ == "__main__":
 	# for i in gs:
 	# 	print i, " : ", gs[i]
 	# 	print gs[i][-1] in ep
-	game_set = set()
-	game_set2 = set()
+	gs1 = set()
+	gs2 = set()
+	gs3 = set()
 
 	for i in BB.gamestate:
 		car = i
 		moves = BB.check_moveability(car)
-		B1 = BB.move_auto(car,moves[0])
-		B2 = BB.move_auto(car,moves[0])
-		print B1 == B2
-		game_set.add(B1)
-		game_set2.add(B2)
+		print "moves: ",moves
+		if len(moves)>0:
+			B1 = BB.move_auto(car,moves[0])
+			B2 = BB.move_auto(car,moves[0])
+			if len(moves)>1:
+				print "jaaaaaa"
+				B3 = BB.move_auto(car,moves[1])
+			else:
+				B3 = BB.move_auto(car,moves[0])
+			print "b1 ==b2", B1 == B2
+			print "b1 == b3", B1 == B3
+			gs1.add(B1)
+			gs2.add(B2)
+			gs3.add(B3)
 
-	print game_set,game_set2
+
+	print "g1 = g2? y: ", gs1 == gs2
+	print "g1 = g3? n: ", gs1== gs3
+
+	for i in gs1:
+		print "1:", i in gs1
+		print "2:" ,i in gs2
+		print "3:" ,i in gs3
 
 
 
