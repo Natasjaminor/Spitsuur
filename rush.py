@@ -1,5 +1,5 @@
 
-# import rushvisua
+import rushvisua
 
 ######### 
 # Maybe it is more convenient to have a class to make position objects
@@ -43,6 +43,7 @@ class Position:
 		return  str((self.x,self.y))
 	def __hash__(self):
 		return hash((self.x,self.y))
+
 
 
 
@@ -265,38 +266,70 @@ def load_game(gamefilename):
         print width, height, x, y, color
         board._draw_cars(x,y,width,height, color)
     board.done()
-        
-if __name__ == "__main__":    
-	game = "game_new.txt"
-	dim, gs, em, ex = load_yas(game)
 
-	BB = Board(dim, gs, em, ex)
-	# for i in gs:
-	# 	print i, " : ", gs[i]
-	# 	print gs[i][-1] in ep
+def visualize(game):
+    cars_pos = load_yas(game)
+    width= int(cars_pos[0])
+    height = int(cars_pos[0])
+    cars_loc = cars_pos[1]
+    empty = cars_pos[2]
+    exit = cars_pos[3]
+    app = rushvisua.BoardVisualization(width, height)
+    #print exit
+    print cars_loc.values()
+    for values in cars_loc.values():
+        
+        if len(values) > 2:
+            begin_values = values[0]
+            middle_values = values[1]
+            end_values = values[2]
+        else:
+            begin_values = values[0]
+            end_values = values[1]
+        x1 = begin_values.get_x()
+        y1 = begin_values.get_y()
+        x2 = end_values.get_x()
+        y2 = end_values.get_y()
+        app._draw_cars(x1,y1,x2,y2)
+    app.done()
+
+visualize("game_new.txt")
+
+
+# if __name__ == "__main__":
+
+        
+# 	game = "game_new.txt"
+# 	dim, gs, em, ex = load_yas(game)
+
+# 	BB = Board(dim, gs, em, ex)
+# 	# for i in gs:
+# 	# 	print i, " : ", gs[i]
+# 	# 	print gs[i][-1] in ep
 	
-	print "gs before: ", gs
-	print "empty before: ", em
-	print len(em)
-	moved_dict = {}
-	m1 ={}
-	m2 = {}
-	c = 1
-	for i in BB.gamestate:
-		car = i
-		m1[car] = c
-		m2[car] = c+1
-		moves = BB.check_moveability(car)
-		BB.move_auto(car,moves[0])
+# 	print "gs before: ", gs
+# 	print "empty before: ", em
+# 	print len(em)
+# 	moved_dict = {}
+# 	m1 ={}
+# 	m2 = {}
+# 	c = 1
+# 	for i in BB.gamestate:
+# 		car = i
+# 		m1[car] = c
+# 		m2[car] = c+1
+# 		moves = BB.check_moveability(car)
+# 		BB.move_auto(car,moves[0])
 		
-	print "gs after: ", gs
-	print "em after: ", BB.empty
-	print len(BB.empty)
+# 	print "gs after: ", gs
+# 	print "em after: ", BB.empty
+# 	print len(BB.empty)
 	
-	# hier komt true uit terwijl dit niet true is
-	# hoe kunnen we dit fixen?
-	print "Are the gamestates the same?: ", gs == BB.get_gamestate() 
-	print m1 == m2
+# 	# hier komt true uit terwijl dit niet true is
+# 	# hoe kunnen we dit fixen?
+# 	print "Are the gamestates the same?: ", gs == BB.get_gamestate() 
+# 	print m1 == m2
+
 
 
 
