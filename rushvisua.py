@@ -21,7 +21,7 @@ class BoardVisualization:
         self.tiles = {}
         for i in range(width):
             for j in range(height):
-                if i == width - 1 and j == (height/2) - 1:
+                if i == width - 1 and j == (height/2):
                     x2,y2 = self._map_coords(i,j)
                 else:
                     x1, y1 = self._map_coords(i,j)
@@ -43,15 +43,17 @@ class BoardVisualization:
         return (250 + 450 * ((x-self.width / 2.0) / self.max_dim),
                 250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
-    def _draw_cars(self, x,y,width,height, color):
+    def _draw_cars(self, x,y,width,height):
         x1,y1 = self._map_coords(x,y)
-        x2,y2 = self._map_coords(width+x,height+y)
+        width = math.ceil(x/width)
+        height = math.ceil(y/height)
+        x2,y2 = self._map_coords(width + x, height + y)
         print x1, y1, x2, y2
-        self.canvas.create_rectangle(x1, y1, x2, y2, fill = color)
+        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "blue", outline ="black")
 
     def update(self,board,car):
         # changes coordinates of rectangle (car) if possible
-        
+        pass
 
     def done(self):
         mainloop()
