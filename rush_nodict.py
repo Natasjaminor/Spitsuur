@@ -8,10 +8,7 @@
 
 #########
 # NOTE:
-# de gamestates opslaan als dictionary is handig maar er ontstaan problemen
-# wanneer de dicts in een set worden opgeslagen (sequentie van gamestates)
-# waarschijnlijk moeten we een andere manier vinden om het op te slaan
-# zodat de gamestates in een set kunnen worden opgeslagen...
+# gamestates is a tuple of tuple elements:(auto,((x,y),(x,y))
 #########
 class Board(object):
 	"""
@@ -22,9 +19,8 @@ class Board(object):
 	  Initializes the board with its dimensions. The initial
 	  gamestate,exit and emptyfields are stored.
 	  dimensions: integer
-	  gamestate: dictionary -> key; auto ,
-	       value; list of occupied positions as Position.
-	  empty_pos: set of Position objects on the board that are empty.
+	  gamestate: tuple of all cars and its positions as tuples
+	  empty_pos: list of (x,y)
 
 	  """
 	  self.dimensions = dimensions
@@ -181,7 +177,7 @@ def generate_all_positions(dimensions):
 
 def load_game(gamefilename):
 	inputFile = open(gamefilename)
-	gamestate = {}
+	gamestate = []
 
 	car_id = 0
 
@@ -212,9 +208,10 @@ def load_game(gamefilename):
 	        car = Auto(direction,length,color,car_id)
 	        taken_positions = assign_positions(car,top_pos)
 	        
-	        gamestate[car] = taken_positions
+	        gamestate.extend(car,taken_positions)
 	        for i in taken_positions:
 	        	empty_pos.remove(i)
+	gamestate = tuple(gamestate)
 	return board_dimensions, gamestate, empty_pos, exit_pos
 
 
