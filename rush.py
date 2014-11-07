@@ -239,35 +239,8 @@ def load_yas(gamefilename):
 	        	empty_pos.remove(i)
 	return board_dimensions, gamestate, empty_pos, exit_pos
 
-def load_game(gamefilename):
-    
-     # TO DO:
-     # hier moet moet ook een set gemaakt worden met alle vlakken
-     # elke keer als een veld word ingenomen door een wagen wordt 
-     # deze uit de set verwijderd ---setnaam.remove((1,2))---
-     # en uiteindelijk hou je een set over met lege velden die dan
-     # mee wordt gegeven aan het board
 
-     ## ook posities moeten een Position object worden en in die set worden gezet.
-
-    inputFile = open(gamefilename)
-    cars = []
-    board = rushvisua.BoardVisualization(4,4)
-
-    for line in inputFile:
-        aline = line.strip()
-        theline = aline.split(" ")
-
-        width = int(theline[0]) 
-        height = int(theline[1]) 
-        x = int(theline[2]) 
-        y = int(theline[3])
-        color = theline[4]
-        print width, height, x, y, color
-        board._draw_cars(x,y,width,height, color)
-    board.done()
-
-def visualize(game):
+def visualize(BB):
     cars_pos = load_yas(game)
     width= int(cars_pos[0])
     height = int(cars_pos[0])
@@ -301,6 +274,7 @@ if __name__ == "__main__":
 	dim, gs, em, ex = load_yas(game)
 
 	BB = Board(dim, gs, em, ex)
+    visualize(BB)
 	# for i in gs:
 	# 	print i, " : ", gs[i]
 	# 	print gs[i][-1] in ep
