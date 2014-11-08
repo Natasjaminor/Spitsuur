@@ -1,6 +1,7 @@
 from Tkinter import *
 import math
 import time
+import random
 
 class BoardVisualization:
     def __init__(self, width, height, delay = 0.2):
@@ -43,17 +44,26 @@ class BoardVisualization:
         return (250 + 450 * ((x-self.width / 2.0) / self.max_dim),
                 250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
-    def _draw_cars(self, x,y,width,height):
-        x1,y1 = self._map_coords(x,y)
-        width = math.ceil(x/width)
-        height = math.ceil(y/height)
-        x2,y2 = self._map_coords(width + x, height + y)
+    def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction, color):
+        colors = ["blue", "yellow", "green", "purple"]
+        x1,y1 = self._map_coords(begin_x,begin_y)
+        
+        if direction == 'h':
+            x2,y2 = self._map_coords(begin_x + length, begin_y + 1)
+        else:
+            x2,y2 = self._map_coords(begin_x +1, begin_y + length)
         print x1, y1, x2, y2
-        self.canvas.create_rectangle(x1, y1, x2, y2, fill = "blue", outline ="black")
+        if color == "red":
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
+        else:
+            random_color = random.randrange(0,3)
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill = colors[random_color], outline ="black")
 
-    def update(self,board,car):
+
+    def update(self, board, auto):
+        print board.get_gamestate_tuple()
         # changes coordinates of rectangle (car) if possible
-        pass
+        
 
     def done(self):
         mainloop()

@@ -3,7 +3,7 @@
 # alleen moeten hier posities als tuples geimplementeerd worden
 
 
-# import rushvisua
+import rushvisua
 
 
 #########
@@ -218,30 +218,24 @@ def load_game(gamefilename):
 
 
 def visualize(BB):
-    cars_pos = load_game(game)
-    width= int(cars_pos[0])
-    height = int(cars_pos[0])
-    cars_loc = cars_pos[1]
-    empty = cars_pos[2]
-    exit = cars_pos[3]
-    app = rushvisua.BoardVisualization(width, height)
-    #print exit
-    print cars_loc.values()
-    for values in cars_loc.values():
-        
-        if len(values) > 2:
-            begin_values = values[0]
-            middle_values = values[1]
-            end_values = values[2]
-        else:
-            begin_values = values[0]
-            end_values = values[1]
-        x1 = begin_values.get_x()
-        y1 = begin_values.get_y()
-        x2 = end_values.get_x()
-        y2 = end_values.get_y()
-        app._draw_cars(x1,y1,x2,y2)
-    app.done()
+	game = BB.gamestate
+	width = int(BB.dimensions)
+	height = int(BB.dimensions)
+	board = rushvisua.BoardVisualization(width, height)
+	for coords in game.items():
+		car_id = coords[0]
+		direction = car_id.direction
+		color = car_id.color
+		length = car_id.length
+		begin_x = coords[1][0][0]
+		begin_y = coords[1][0][1]
+		end_x =  coords[1][-1][0]
+		end_y =  coords[1][-1][1]
+		board.update(BB, car_id)
+		board._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color)
+	board.done()
+
+   
 
 
 if __name__ == "__main__":
@@ -253,7 +247,6 @@ if __name__ == "__main__":
 	dim, gs, em, ex = load_game(game)
 
 	BB = Board(dim, gs, em, ex)
-    # visualize(BB)
 	# for i in gs:
 	# 	print i, " : ", gs[i]
 	# 	print gs[i][-1] in ep
@@ -292,6 +285,7 @@ if __name__ == "__main__":
 			gs2.add(B2)
 			gs3.add(B3)
 
+
 	print "g1 = g2? y: ", gs1 == gs2
 	print "g1 = g3? n: ", gs1 == gs3
 	print "all in gs3:"
@@ -309,6 +303,7 @@ if __name__ == "__main__":
 	print len(gs1)
 	print len(gs2)
 	print len(gs3)
+	visualize(BB)
 
 
 
