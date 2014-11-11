@@ -183,6 +183,7 @@ def load_game(gamefilename):
 	gamestate = {}
 
 	car_id = 0
+	global red_car
 
 	for line in inputFile:
 	    line_elements = line.strip()
@@ -200,6 +201,7 @@ def load_game(gamefilename):
 	        top_pos = (x,y)
 	        if line_elements[-1] == 'red':
 				color = 'red'
+				red_car = Auto(direction,length,color,car_id)
 				if board_dimensions%2 == 0:
 					exit = board_dimensions/2
 				else:
@@ -207,8 +209,9 @@ def load_game(gamefilename):
 				exit_pos = (x,exit)
 	        else:
 	        	color = None
+	        	car = Auto(direction,length,color,car_id)
+
 	        car_id += 1
-	        car = Auto(direction,length,color,car_id)
 	        taken_positions = assign_positions(car,top_pos)
 	        
 	        gamestate[car] = taken_positions
