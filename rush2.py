@@ -303,11 +303,8 @@ if __name__ == "__main__":
 	print len(gs1)
 	print len(gs2)
 	print len(gs3)
-<<<<<<< HEAD
 
-	visualize(BB)
-=======
->>>>>>> parent of f749ca2... probably a small change
+	# visualize(BB)
 
 
 
