@@ -4,7 +4,7 @@ import time
 import random
 
 class BoardVisualization:
-    def __init__(self, width, height, delay = 1.0):
+    def __init__(self, width, height, delay = 0.2):
         #self.num_autos = num_autos
         self.delay = delay
         self.max_dim = max(width, height)
@@ -38,9 +38,6 @@ class BoardVisualization:
             x2, y2 = self._map_coords(width, i)
             self.canvas.create_line(x1, y1, x2, y2)
 
-        self.cars = None
-        self.master.update()
-
 
     def _map_coords(self, x, y):
         "Maps grid positions to window positions (in pixels)."
@@ -57,40 +54,15 @@ class BoardVisualization:
             x2,y2 = self._map_coords(begin_x +1, begin_y + length)
         print x1, y1, x2, y2
         if color == "red":
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
         else:
-            random_color = random.randrange(0,3) 
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = colors[random_color], outline ="black")
+            random_color = random.randrange(0,3)
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill = colors[random_color], outline ="black")
 
 
-    def update(self, gamestate):
-        for state in gamestate:
-            game = state.gamestate
-            print game, "from Rushvisua gamestate"
-    
-            #delete existing cars
-            if self.cars != None:
-                for car in self.cars:
-                    self.canvas.delete(car)
-                    #self.master.update_idletasks()
-
-            #draw new cars
-            self.cars = []
-            for coords in game.items():
-                car_id = coords[0]
-                direction = car_id.direction
-                color = car_id.color
-                length = car_id.length
-                begin_x = coords[1][0][0]
-                begin_y = coords[1][0][1]
-                end_x =  coords[1][-1][0]
-                end_y =  coords[1][-1][1]
-                self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
-
-        print self.cars, "lijst met autos uit rushvisua"
-        self.master.update()
-        time.sleep(self.delay)
-        
+    def update(self, board, auto):
+        print board.get_gamestate_tuple()
+        # changes coordinates of rectangle (car) if possible
         
 
     def done(self):
