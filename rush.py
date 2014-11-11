@@ -221,19 +221,18 @@ def visualize(BB):
 	game = BB.gamestate
 	width = int(BB.dimensions)
 	height = int(BB.dimensions)
+	gamestate = set()
 	board = rushvisua.BoardVisualization(width, height)
-	for coords in game.items():
-		car_id = coords[0]
-		direction = car_id.direction
-		color = car_id.color
-		length = car_id.length
-		begin_x = coords[1][0][0]
-		begin_y = coords[1][0][1]
-		end_x =  coords[1][-1][0]
-		end_y =  coords[1][-1][1]
-		board.update(BB, car_id)
-		board._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color)
-	board.done()
+	for i in game:
+		car = i
+		moves = BB.check_moveability(car)
+		if len(moves)>1:
+			B3 = BB.move_auto(car,moves[1])
+		else:
+			B3 = BB.move_auto(car, moves[0])
+		gamestate.add(B3)
+		board.update(gamestate)
+ 	board.done()
 
    
 
@@ -303,7 +302,7 @@ if __name__ == "__main__":
 	print len(gs1)
 	print len(gs2)
 	print len(gs3)
-	
+
 	visualize(BB)
 
 
