@@ -309,6 +309,11 @@ if __name__ == "__main__":
 	print len(gs1)
 	print len(gs2)
 	print len(gs3)
+	z = gs1.union(gs2)
+	print len(z)
+
+	k = gs1.union(gs3)
+	print len(k)
 
 
 
