@@ -47,7 +47,7 @@ class BoardVisualization:
         return (250 + 450 * ((x-self.width / 2.0) / self.max_dim),
                 250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
-    def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction, color):
+    def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction):
         colors = ["blue", "yellow", "green", "purple"]
         x1,y1 = self._map_coords(begin_x,begin_y)
         
@@ -56,6 +56,9 @@ class BoardVisualization:
         else:
             x2,y2 = self._map_coords(begin_x +1, begin_y + length)
         print x1, y1, x2, y2
+
+
+    def _pick_color(self,color):
         if color == "red":
             return self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
         else:
@@ -74,7 +77,7 @@ class BoardVisualization:
                     self.canvas.delete(car)
                     #self.master.update_idletasks()
 
-                        #draw new cars
+            #draw new cars
             self.cars = []
             for coords in game.items():
                 car_id = coords[0]
@@ -85,6 +88,7 @@ class BoardVisualization:
                 begin_y = coords[1][0][1]
                 end_x =  coords[1][-1][0]
                 end_y =  coords[1][-1][1]
+                self._
                 self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
 
         print self.cars, "lijst met autos uit rushvisua"
