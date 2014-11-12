@@ -237,8 +237,6 @@ def visualize(BB):
  	board.done()
 
    
-
-
 if __name__ == "__main__":
 
     ###############
