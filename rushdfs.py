@@ -48,7 +48,7 @@ def bruteDFS(startboard, gameset, solutions, maxdep = 24):
 			new_set = gameset.copy()
 			bruteDFS(new_board, new_set, solutions)
 			return solutions
-			
+
 
 if __name__ == '__main__':
 	game = "game_new.txt"
