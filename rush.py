@@ -79,7 +79,6 @@ class Board(object):
 			if right != None:
 			    if self.is_empty(right):
 					new_top_pos_list.append(self.get_right(front))
-		print "--in check: ", new_top_pos_list
 		return new_top_pos_list
 	
 	def get_new_positions(self, auto, new_top_pos):
@@ -201,19 +200,19 @@ def load_game(gamefilename):
 	        top_pos = (x,y)
 	        if line_elements[-1] == 'red':
 				color = 'red'
-				red_car = Auto(direction,length,color,car_id)
 				if board_dimensions%2 == 0:
 					exit = board_dimensions/2
 				else:
 					exit = board_dimensions/2 +1
-				exit_pos = (x,exit)
+				exit_pos = (board_dimensions -1,exit-1)
+				print "ex",exit_pos
 	        else:
 	        	color = None
-	        	car = Auto(direction,length,color,car_id)
+	        car = Auto(direction,length,color,car_id)
 
 	        car_id += 1
 	        taken_positions = assign_positions(car,top_pos)
-	        
+	        print car_id, taken_positions
 	        gamestate[car] = taken_positions
 	        for i in taken_positions:
 	        	empty_pos.remove(i)
