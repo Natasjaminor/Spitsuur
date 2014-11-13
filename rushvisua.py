@@ -47,8 +47,7 @@ class BoardVisualization:
         return (250 + 450 * ((x-self.width / 2.0) / self.max_dim),
                 250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
-    def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction):
-        colors = ["blue", "yellow", "green", "purple"]
+    def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction, color):
         x1,y1 = self._map_coords(begin_x,begin_y)
         
         if direction == 'h':
@@ -56,15 +55,10 @@ class BoardVisualization:
         else:
             x2,y2 = self._map_coords(begin_x +1, begin_y + length)
         print x1, y1, x2, y2
+        return self.canvas.create_rectangle(x1, y1, x2, y2, fill = color, outline ="black")
 
-
-    def _pick_color(self,color):
-        if color == "red":
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
-        else:
-            random_color = random.randrange(0,3)
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = colors[random_color], outline ="black")
-
+    def new_random_color(self):
+        return "#"+str(random.randrange(100000,999999))
 
     def update(self, gamestate):
         for state in gamestate:
@@ -82,13 +76,14 @@ class BoardVisualization:
             for coords in game.items():
                 car_id = coords[0]
                 direction = car_id.direction
+                if (car_id.color == None):
+                    car_id.color = self.new_random_color()
                 color = car_id.color
                 length = car_id.length
                 begin_x = coords[1][0][0]
                 begin_y = coords[1][0][1]
                 end_x =  coords[1][-1][0]
                 end_y =  coords[1][-1][1]
-                self._
                 self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
 
         print self.cars, "lijst met autos uit rushvisua"
