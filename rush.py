@@ -289,7 +289,7 @@ if __name__ == "__main__":
 	print len(gs2)
 	print len(gs3)
 
-	visualize(BB)
+	visualize(BB) 
 
 
 
