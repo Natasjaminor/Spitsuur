@@ -219,9 +219,23 @@ def load_game(gamefilename):
 	return board_dimensions, gamestate, empty_pos, exit_pos
 
 
-def visualize(the_list):
-	print the_list
+def visualize(BB, solutions):
+	#print solutions
+	width = int(BB.dimensions)
+	height = int(BB.dimensions)
+	gamestate = []
+	board = rushvisua.BoardVisualization(width, height)
 
+	for i in solutions:
+		#print i, "hallo"
+		for j in i:
+			#print j 
+			#print j.gamestate, "hoi"
+			gamestate.append(j)
+			board.update(gamestate)
+			#print gamestate, "the gamestate set"		
+	board.done()
+	
    
 if __name__ == "__main__":
 
@@ -289,7 +303,7 @@ if __name__ == "__main__":
 	print len(gs2)
 	print len(gs3)
 
-	visualize(BB) 
+	#visualize(BB) 
 
 
 

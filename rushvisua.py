@@ -54,7 +54,7 @@ class BoardVisualization:
             x2,y2 = self._map_coords(begin_x + length, begin_y + 1)
         else:
             x2,y2 = self._map_coords(begin_x +1, begin_y + length)
-        print x1, y1, x2, y2
+        #print x1, y1, x2, y2
         return self.canvas.create_rectangle(x1, y1, x2, y2, fill = color, outline ="black")
 
     def new_random_color(self):
@@ -62,8 +62,9 @@ class BoardVisualization:
 
     def update(self, gamestate):
         for state in gamestate:
+            #print state
             game = state.gamestate
-            print game, "from Rushvisua gamestate"
+            #print game, "from Rushvisua gamestate"
     
             #delete existing cars
             if self.cars != None:
@@ -86,7 +87,7 @@ class BoardVisualization:
                 end_y =  coords[1][-1][1]
                 self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
 
-        print self.cars, "lijst met autos uit rushvisua"
+        #print self.cars, "lijst met autos uit rushvisua"
         self.master.update()
         time.sleep(self.delay)
         
