@@ -47,6 +47,7 @@ def bruteDFS(startboard, gameset, solutions, maxdep = 24):
 					solutions.append(gameset)
 			new_set = gameset.copy()
 			bruteDFS(new_board, new_set, solutions)
+			print solutions		
 			return solutions
 
 
@@ -56,6 +57,8 @@ if __name__ == '__main__':
 
 	BB = Board(dim, gs, em, ex)
 	runBruteDfs(BB)
+
+	
 	# print "done"
 
 

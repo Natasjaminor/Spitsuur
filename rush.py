@@ -219,22 +219,8 @@ def load_game(gamefilename):
 	return board_dimensions, gamestate, empty_pos, exit_pos
 
 
-def visualize(BB):
-	game = BB.gamestate
-	width = int(BB.dimensions)
-	height = int(BB.dimensions)
-	gamestate = set()
-	board = rushvisua.BoardVisualization(width, height)
-	for i in game:
-		car = i
-		moves = BB.check_moveability(car)
-		if len(moves)>1:
-			B3 = BB.move_auto(car,moves[1])
-		else:
-			B3 = BB.move_auto(car, moves[0])
-		gamestate.add(B3)
-		board.update(gamestate)
- 	board.done()
+def visualize(the_list):
+	print the_list
 
    
 if __name__ == "__main__":
