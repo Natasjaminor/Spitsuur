@@ -122,8 +122,8 @@ class Board(object):
 	def is_empty(self, pos):
 		# Returns True if a position is empty, False if it is taken.
 		return pos in self.empty
-	# def __repr__(self):
-	# 	return str(self.gamestate) + "\n"
+	def __repr__(self):
+		return str(self.gamestate) + "\n"
 	def __eq__(self,other):
 		return self.gamestate == other.gamestate
 	def __hash__(self):
@@ -222,7 +222,7 @@ def load_game(gamefilename):
 
 
 def visualize(BB, solutions):
-	#print solutions
+	print solutions, "from rush"
 	width = int(BB.dimensions)
 	height = int(BB.dimensions)
 	gamestate = []
@@ -231,8 +231,8 @@ def visualize(BB, solutions):
 	for i in solutions:
 		#print i, "hallo"
 		for j in i:
-			print j 
-			print j.gamestate, "hoi"
+			#print j 
+			#print j.gamestate, "hoi"
 			gamestate.append(j)
 			board.update(gamestate)
 			#print gamestate, "the gamestate set"		
