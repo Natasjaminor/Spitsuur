@@ -1,4 +1,5 @@
 from rush import *
+import copy
 
 global count 
 count = 0
@@ -69,6 +70,8 @@ def bruteDFS(startboard, gameset, solutions):
 						solutions[0] = new_set
 						break # stop looking further in this branch
 			bruteDFS(new_board, new_set, solutions)
+			#print solutions	
+			#return solutions
 
 if __name__ == '__main__':
 	game = "game_new.txt"
@@ -76,10 +79,9 @@ if __name__ == '__main__':
 
 	BB = Board(dim, gs, em, ex)
 	sol = runBruteDfs(BB)
-	for i in sol:
-		pass
-		# print i
-		# if len(i) < 50:
-			# print i
+
 	print "Solution: \n",sol
-	# print "done"
+		for j in i:
+			print j.gamestate
+
+	visualize(BB, sol)
