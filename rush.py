@@ -105,7 +105,7 @@ class Board(object):
 		new_pos = self.get_new_positions(auto,new_top_pos)
 		
 		new_empty = list(self.empty)
-		# self.gamestate[auto] = new_pos
+		#self.gamestate[auto] = new_pos
 		for i in old_pos:
 			if not (i in new_pos):
 				new_empty.append(i)
@@ -231,8 +231,8 @@ def visualize(BB, solutions):
 	for i in solutions:
 		#print i, "hallo"
 		for j in i:
-			#print j 
-			#print j.gamestate, "hoi"
+			print j 
+			print j.gamestate, "hoi"
 			gamestate.append(j)
 			board.update(gamestate)
 			#print gamestate, "the gamestate set"		
