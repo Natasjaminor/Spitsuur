@@ -7,13 +7,14 @@ count = 0
 def runBruteDfs(startboard):
 	solutions = []
 	gameset = {startboard}
+	gamelist = [startboard]
 
-	bruteDFS(startboard,gameset,solutions)
+	bruteDFS(startboard,gameset,gamelist,solutions)
 	print "in run:number of solutions ", len(solutions)
 	return solutions
 
 
-def bruteDFS(startboard, gameset, solutions):
+def bruteDFS(startboard, gameset, gamelist, solutions):
 	# for all cars check movability
 	# for every car try to move
 	# remember the gamestate in the set of gamestates
@@ -49,7 +50,9 @@ def bruteDFS(startboard, gameset, solutions):
 			if new_board in gameset:
 				continue # do another move
 			new_set = gameset.copy()
+			new_list = list(gamelist)
 			new_set.add(new_board)
+			new_list.append(new_board)
 			if len(solutions)>0:
 				if len(solutions[0]) < len(new_set):
 					# print "            SKIP:", len(new_set),"\n"
@@ -62,14 +65,16 @@ def bruteDFS(startboard, gameset, solutions):
 					if len(solutions) == 0:
 						print "\n first solution\n"
 						solutions.append(new_set)
+						solutions.append(new_list)
+						break
 					elif len(solutions[0])== len(new_set):
-						print "\n add!\n"
 						break # stop looking further in this branch
 					elif len(solutions[0])> len(new_set):
 						print "\n replace\n"
 						solutions[0] = new_set
+						solutions[1] = new_list
 						break # stop looking further in this branch
-			bruteDFS(new_board, new_set, solutions)
+			bruteDFS(new_board, new_set, new_list,solutions)
 			#print solutions	
 			#return solutions
 
@@ -80,8 +85,8 @@ if __name__ == '__main__':
 	BB = Board(dim, gs, em, ex)
 	sol = runBruteDfs(BB)
 
-	print "Solution: \n",sol
-		for j in i:
-			print j.gamestate
+	# print "Solution: \n",sol
+	# for j in sol[0]:
+	# 	print j.gamestate, "\n"
 
-	visualize(BB, sol)
+	visualize(BB, [sol[1]])
