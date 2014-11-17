@@ -122,6 +122,8 @@ class Board(object):
 	def is_empty(self, pos):
 		# Returns True if a position is empty, False if it is taken.
 		return pos in self.empty
+	# def __repr__(self):
+	# 	return str(self.gamestate) + "\n"
 	def __eq__(self,other):
 		return self.gamestate == other.gamestate
 	def __hash__(self):
@@ -205,14 +207,14 @@ def load_game(gamefilename):
 				else:
 					exit = board_dimensions/2 +1
 				exit_pos = (board_dimensions -1,exit-1)
-				print "ex",exit_pos
+				print "ex:",exit_pos
 	        else:
 	        	color = None
 	        car = Auto(direction,length,color,car_id)
 
 	        car_id += 1
 	        taken_positions = assign_positions(car,top_pos)
-	        print car_id, taken_positions
+	        print "car:",car_id, taken_positions
 	        gamestate[car] = taken_positions
 	        for i in taken_positions:
 	        	empty_pos.remove(i)
