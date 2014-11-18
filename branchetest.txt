@@ -1,0 +1,51 @@
+Testfile to test branches.
+1.
+2.
+3.
+4.dit is yasmina.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
+14.Natasja heeft hier iets getypt jeej :D
+15.
+
+
+
+<<<<<<< HEAD
+=======
+dit is yasmina.
+yasmina try 2
+>>>>>>> 68a792e1423d0da56d2d6e6c4af1fa0092ed7ab3
+
+
+
+
+
+
+<<<<<<< HEAD
+
+
+
+
+
+
+
+Rukshar in branch
+
+
+
+<<<<<<< HEAD
+=======
+Natasja heeft hier iets getypt jeej :D
+<<<<<<< HEAD
+>>>>>>> 2e13626a48daf262b4e0be16f29da1816463d242
+=======
+>>>>>>> 68a792e1423d0da56d2d6e6c4af1fa0092ed7ab3
+
+>>>>>>> 8a0e12eb4dbfb83e83112a0802883cc951e23e5c
