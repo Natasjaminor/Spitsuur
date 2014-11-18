@@ -79,7 +79,6 @@ class Board(object):
 			if right != None:
 			    if self.is_empty(right):
 					new_top_pos_list.append(self.get_right(front))
-		print "--in check: ", new_top_pos_list
 		return new_top_pos_list
 	
 	def get_new_positions(self, auto, new_top_pos):
@@ -106,7 +105,7 @@ class Board(object):
 		new_pos = self.get_new_positions(auto,new_top_pos)
 		
 		new_empty = list(self.empty)
-		# self.gamestate[auto] = new_pos
+		#self.gamestate[auto] = new_pos
 		for i in old_pos:
 			if not (i in new_pos):
 				new_empty.append(i)
@@ -123,6 +122,8 @@ class Board(object):
 	def is_empty(self, pos):
 		# Returns True if a position is empty, False if it is taken.
 		return pos in self.empty
+	def __repr__(self):
+		return str(self.gamestate) + "\n"
 	def __eq__(self,other):
 		return self.gamestate == other.gamestate
 	def __hash__(self):
@@ -183,6 +184,7 @@ def load_game(gamefilename):
 	gamestate = {}
 
 	car_id = 0
+	global red_car
 
 	for line in inputFile:
 	    line_elements = line.strip()
@@ -204,39 +206,39 @@ def load_game(gamefilename):
 					exit = board_dimensions/2
 				else:
 					exit = board_dimensions/2 +1
-				exit_pos = (x,exit)
+				exit_pos = (board_dimensions -1,exit-1)
+				print "ex:",exit_pos
 	        else:
 	        	color = None
-	        car_id += 1
 	        car = Auto(direction,length,color,car_id)
+
+	        car_id += 1
 	        taken_positions = assign_positions(car,top_pos)
-	        
+	        print "car:",car_id, taken_positions
 	        gamestate[car] = taken_positions
 	        for i in taken_positions:
 	        	empty_pos.remove(i)
 	return board_dimensions, gamestate, empty_pos, exit_pos
 
 
-def visualize(BB):
-	game = BB.gamestate
+def visualize(BB, solutions):
+	print solutions, "from rush"
 	width = int(BB.dimensions)
 	height = int(BB.dimensions)
-	gamestate = set()
+	gamestate = []
 	board = rushvisua.BoardVisualization(width, height)
-	for i in game:
-		car = i
-		moves = BB.check_moveability(car)
-		if len(moves)>1:
-			B3 = BB.move_auto(car,moves[1])
-		else:
-			B3 = BB.move_auto(car, moves[0])
-		gamestate.add(B3)
-		board.update(gamestate)
- 	board.done()
 
+	for i in solutions:
+		#print i, "hallo"
+		for j in i:
+			#print j 
+			#print j.gamestate, "hoi"
+			gamestate.append(j)
+			board.update(gamestate)
+			#print gamestate, "the gamestate set"		
+	board.done()
+	
    
-
-
 if __name__ == "__main__":
 
     ###############
@@ -303,7 +305,7 @@ if __name__ == "__main__":
 	print len(gs2)
 	print len(gs3)
 
-	visualize(BB)
+	#visualize(BB) 
 
 
 

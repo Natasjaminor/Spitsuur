@@ -4,7 +4,7 @@ import time
 import random
 
 class BoardVisualization:
-    def __init__(self, width, height, delay = 0.2):
+    def __init__(self, width, height, delay = 0.5):
         #self.num_autos = num_autos
         self.delay = delay
         self.max_dim = max(width, height)
@@ -48,25 +48,23 @@ class BoardVisualization:
                 250 + 450 * ((y-self.height / 2.0) / self.max_dim))
 
     def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction, color):
-        colors = ["blue", "yellow", "green", "purple"]
         x1,y1 = self._map_coords(begin_x,begin_y)
         
         if direction == 'h':
             x2,y2 = self._map_coords(begin_x + length, begin_y + 1)
         else:
             x2,y2 = self._map_coords(begin_x +1, begin_y + length)
-        print x1, y1, x2, y2
-        if color == "red":
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = "red", outline ="black")
-        else:
-            random_color = random.randrange(0,3)
-            return self.canvas.create_rectangle(x1, y1, x2, y2, fill = colors[random_color], outline ="black")
+        #print x1, y1, x2, y2
+        return self.canvas.create_rectangle(x1, y1, x2, y2, fill = color, outline ="black")
 
+    def new_random_color(self):
+        return "#"+str(random.randrange(100000,999999))
 
     def update(self, gamestate):
         for state in gamestate:
+            #print state
             game = state.gamestate
-            print game, "from Rushvisua gamestate"
+            #print game, "from Rushvisua gamestate"
     
             #delete existing cars
             if self.cars != None:
@@ -74,11 +72,13 @@ class BoardVisualization:
                     self.canvas.delete(car)
                     #self.master.update_idletasks()
 
-                        #draw new cars
+            #draw new cars
             self.cars = []
             for coords in game.items():
                 car_id = coords[0]
                 direction = car_id.direction
+                if (car_id.color == None):
+                    car_id.color = self.new_random_color()
                 color = car_id.color
                 length = car_id.length
                 begin_x = coords[1][0][0]
@@ -87,7 +87,7 @@ class BoardVisualization:
                 end_y =  coords[1][-1][1]
                 self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
 
-        print self.cars, "lijst met autos uit rushvisua"
+        #print self.cars, "lijst met autos uit rushvisua"
         self.master.update()
         time.sleep(self.delay)
         
