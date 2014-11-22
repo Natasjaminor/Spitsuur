@@ -222,20 +222,14 @@ def load_game(gamefilename):
 
 
 def visualize(BB, solutions):
-	print solutions, "from rush"
 	width = int(BB.dimensions)
 	height = int(BB.dimensions)
 	gamestate = []
 	board = rushvisua.BoardVisualization(width, height)
 
 	for i in solutions:
-		#print i, "hallo"
-		for j in i:
-			#print j 
-			#print j.gamestate, "hoi"
-			gamestate.append(j)
-			board.update(gamestate)
-			#print gamestate, "the gamestate set"		
+		gamestate.append(i)
+		board.update(gamestate)		
 	board.done()
 	
    

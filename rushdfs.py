@@ -88,7 +88,6 @@ if __name__ == '__main__':
 
 	print "Solution: \n",sol
 	
-	visualize(BB, sol)
 	# print "Solution: \n",sol
 	# for j in sol[0]:
 	# 	print j.gamestate, "\n"

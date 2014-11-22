@@ -61,11 +61,9 @@ class BoardVisualization:
         return "#"+str(random.randrange(100000,999999))
 
     def update(self, gamestate):
-        for state in gamestate:
-            #print state
-            game = state.gamestate
-            #print game, "from Rushvisua gamestate"
-    
+        for i in gamestate:
+            game = i.gamestate
+
             #delete existing cars
             if self.cars != None:
                 for car in self.cars:
@@ -86,12 +84,10 @@ class BoardVisualization:
                 end_x =  coords[1][-1][0]
                 end_y =  coords[1][-1][1]
                 self.cars.append(self._draw_cars(begin_x, begin_y, end_x, end_y, length, direction, color))
-
-        #print self.cars, "lijst met autos uit rushvisua"
         self.master.update()
         time.sleep(self.delay)
-        
 
     def done(self):
         mainloop()
+
 
