@@ -9,15 +9,14 @@ def bruteBFS(startboard, start):
 	#append these moves to queue, queue.extend()
 	#check children of parent (queue.pop(0))
 
-	print startboard, "startboard"
+	# print startboard, "startboard"
 	visited = set()
 	queue = Queue.Queue()
 	queue.put(startboard)
 	solutions = []
 	gamelist = [startboard]
-	for elem in list(queue.queue):
-		print elem, "firstqueue"
-
+	# for elem in list(queue.queue):
+		# print elem, "firstqueue"
 
 	while not queue.empty():
 		game = queue.get(0)
@@ -39,7 +38,7 @@ def bruteBFS(startboard, start):
 							solutions.append(visited)
 							solutions.append(new_list)
 			#print solutions, "solutions"
-	print list(queue.queue),"queue"
+	# print list(queue.queue),"queue"
 
 	return solutions	
 	#print visited, "visited"
@@ -48,14 +47,14 @@ def bruteBFS(startboard, start):
 
 
 
-game = "game_new.txt"
+game = "GAME1.txt"
 dim, gs, em, ex = load_game(game)
 
 BB = Board(dim, gs, em, ex)
 start = BB
 
 a = bruteBFS(BB, start)
-print a
-#print a[1], "a"
+# print a
+# print type(a[1]), "a"
 visualize(BB, a[1])
 

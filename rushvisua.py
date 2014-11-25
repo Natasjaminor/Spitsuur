@@ -4,7 +4,7 @@ import time
 import random
 
 class BoardVisualization:
-    def __init__(self, width, height, delay = 0.5):
+    def __init__(self, width, height, delay = 0.2):
         #self.num_autos = num_autos
         self.delay = delay
         self.max_dim = max(width, height)

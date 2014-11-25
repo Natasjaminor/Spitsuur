@@ -61,7 +61,7 @@ def bruteDFS(startboard, gameset, gamelist, solutions):
 			if car.color == 'red': # red_car will be made when game is loaded.
 				# print "red:", new_board.gamestate[car][-1]
 				if new_board.gamestate[car][-1] == startboard.exit:
-					#print "       Found a solution:\n ", len(new_set),"\n"
+					print "       Found a solution:\n ", len(new_set),"\n"
 					if len(solutions) == 0:
 						#print "\n first solution\n"
 						solutions.append(new_set)
@@ -80,13 +80,13 @@ def bruteDFS(startboard, gameset, gamelist, solutions):
 			#return solutions
 
 if __name__ == '__main__':
-	game = "game_new.txt"
+	game = "GAME1.txt"
 	dim, gs, em, ex = load_game(game)
 
 	BB = Board(dim, gs, em, ex)
 	sol = runBruteDfs(BB)
 
-	print "Solution: \n",sol
+	# print "Solution: \n",sol
 	
 	# print "Solution: \n",sol
 	# for j in sol[0]:
