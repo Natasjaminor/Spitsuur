@@ -56,5 +56,5 @@ start = BB
 a = bruteBFS(BB, start)
 # print a
 # print type(a[1]), "a"
-visualize(BB, a[1])
+#visualize(BB, a[1])
 

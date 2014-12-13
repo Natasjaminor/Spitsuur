@@ -32,7 +32,7 @@ def BFS(startboard):
 							return solutions
 	
 
-game = "GAME1.txt"
+game = "game2.txt"
 dim, gs, em, ex = load_game(game)
 
 BB = Board(dim, gs, em, ex)
@@ -41,6 +41,6 @@ a = BFS(BB)
 # print a
 # print type(a[1]), "a"
 print len(a), '<<<<<<< lengte a'
-# print a
-visualize(BB, a)
+#print a
+#visualize(BB, a)
 
