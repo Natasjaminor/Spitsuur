@@ -9,7 +9,7 @@ class Board(object):
 	Represents a board with moveable car objects (auto) and an exit.
 	"""
 
-    def __init__(self, dimensions, gamestate, empty_pos, car_list, exit_pos):
+    def __init__(self, dimensions, gamestate, car_list, exit_pos):
         """
 	  Initializes the board with its dimensions. The initial
 	  gamestate,exit and emptyfields are stored.
@@ -22,7 +22,6 @@ class Board(object):
         self.dimensions = dimensions
         self.gamestate = gamestate
         self.exit = exit_pos
-        self.empty = empty_pos
         self.cars = car_list
         self.directions_list = [self.check_left, self.check_right, self.check_up, self.check_down]
         self.directions_strings = ["left", "right", "up", "down"]
@@ -71,6 +70,7 @@ class Board(object):
         moves = []
         blocking = []
 
+        # Check if a car can move left,right,up,down:
         for i in self.directions_list:
             result, blocked_by = i(car)
             if result:
@@ -80,41 +80,43 @@ class Board(object):
 
         return moves, blocking
 
-    def get_new_positions(self, auto, new_top_pos):
-        # retuns a list of position which are taken by the car
-        # starting from the top left position the car stands on
-        pos_list = [new_top_pos]
-        if auto.get_direction() == "h":
-            for i in range(auto.length - 1):
-                p = pos_list[i]
-                pos_list.append((p[0] + 1, p[1]))
+
+    def move(self,auto,movestring):
+        if movestring == "up" or movestring == "left":
+            change = -1
         else:
-            for i in range(auto.length - 1):
-                p = pos_list[i]
-                pos_list.append((p[0], p[1] + 1))
+            change = 1
+        if auto.get_direction == "h":
+            if movestring == "left":
+                # remove tail, add new head (gamestate)
+                pos = (auto.x[-1],auto.y)
+                self.gamestate[pos] = 0
+                pos = (auto.x[0]-1,auto.y)
+                self.gamestate[pos] = auto
+            else:
+                # remove head, add new tail (gamestate)
+                pos = (auto.x[0],auto.y)
+                self.gamestate[pos] = 0
+                pos = (auto.x[-1]+1,auto.y)
+                self.gamestate[pos] = auto
+            for i in range(len(auto.x)):
+                auto.x[i] += change
 
-        return tuple(pos_list)
-
-    def move_auto(self, auto, new_top_pos):
-        # Changes position of car in gamestate dictionary to the pos_list given
-        # and the difference will be used to update all empty fields?
-        # top_pos : new top-left position for the car
-        gamestate = self.gamestate.copy()
-        old_pos = gamestate[auto]
-        new_pos = self.get_new_positions(auto, new_top_pos)
-
-        new_empty = list(self.empty)
-        # self.gamestate[auto] = new_pos
-        for i in old_pos:
-            if not (i in new_pos):
-                new_empty.append(i)
-                break
-        for i in new_pos:
-            if not (i in old_pos):
-                new_empty.remove(i)
-                break
-        gamestate[auto] = new_pos
-        return Board(self.dimensions, gamestate, new_empty, self.exit)
+        else:
+            if movestring == "up":
+                # remove tail, add new head (gamestate)
+                pos = (auto.x,auto.y[-1])
+                self.gamestate[pos] = 0
+                pos = (auto.x,auto.y[0]-1)
+                self.gamestate[pos] = auto
+            else:
+                # remove head, add new tail (gamestate)
+                pos = (auto.x,auto.y[0])
+                self.gamestate[pos] = 0
+                pos = (auto.x,auto.y[-1]+1)
+                self.gamestate[pos] = auto
+            for i in range(len(auto.y)):
+                auto.y[i] += change
 
     def get_cars(self):
         return self.cars
@@ -124,7 +126,7 @@ class Board(object):
 
     def is_empty(self, pos):
         # Returns True if a position is empty, False if it is taken.
-        return pos in self.empty
+        return self.gamestate[pos] == 0
 
     def __repr__(self):
         return str(self.gamestate) + "\n"
@@ -264,16 +266,22 @@ def load_game(gamefilename):
     exit_pos = (board_dimensions - 1, exit - 1)
     print "ex:",exit_pos
     print ("LOADING FILE in %.3f seconds") % (time.clock() - t1)
-    return board_dimensions, pos_dict, empty_pos, exit_pos, car_list
+    return board_dimensions, pos_dict,exit_pos, car_list
 
 
 if __name__ == "__main__":
+
     game = "game_new.txt"
-    dim, gs, em, ex,car_list = load_game(game)
+    dim, gs, ex,car_list = load_game(game)
     print car_list
 
-    BB = Board(dim, gs, em, car_list, ex)
+    BB = Board(dim, gs, car_list, ex)
     c = car_list[2]
+    print c.direction, c.x, c.y
+    m, b = BB.check_moveability(c)
+    print m
+    print b
+    BB.move(c,m[0])
     print c.direction, c.x, c.y
     m, b = BB.check_moveability(c)
     print m
