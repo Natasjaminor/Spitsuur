@@ -92,4 +92,4 @@ if __name__ == '__main__':
 	# for j in sol[0]:
 	# 	print j.gamestate, "\n"
 
-	visualize(BB, sol[1])
+	#visualize(BB, sol[1])
