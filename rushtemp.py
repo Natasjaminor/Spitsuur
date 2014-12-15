@@ -286,4 +286,4 @@ if __name__ == "__main__":
     m, b = BB.check_moveability(c)
     print m
     print b
-
+    # lalala
