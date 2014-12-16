@@ -3,39 +3,7 @@ from rushnew import *
 import copy
 import Queue
 
-
 def BFS(startboard):
-    # Check all possible moves
-    #append these moves to set
-    #append these moves to queue, queue.extend()
-    #check children of parent (queue.pop(0))
-    visited = set()
-    queue = Queue.Queue()
-    queue.put([startboard])
-    solutions = []
-    gamelist = []
-
-    while not queue.empty():
-        game = queue.get(0)
-        last_board = game[-1]
-        if not last_board in visited:
-            visited.add(last_board)
-            for car in last_board.auto_dict:
-                moves, blocked = last_board.check_moveability(car)
-                for move in moves:
-                    new_board = last_board.move(car, move)
-                    new_game = list(game)
-                    new_game.append(new_board)
-                    queue.put(new_game)
-                    if car.color == 'red':
-                        print "RED CAR IS ON: ", (new_board.auto_dict[car][-1])
-                        if (new_board.auto_dict[car][-1]) == last_board.exit:
-                            print "found"
-                            solutions.extend(new_game)
-                            return solutions
-
-
-def BFS2(startboard):
     #Check all possible moves
     #append these moves to set
     #append these moves to queue, queue.extend()
@@ -74,7 +42,7 @@ if __name__ == "__main__":
 
     BB = Board(dim,pd,ex,ad)
 
-    a = BFS2(BB)
+    a = BFS(BB)
     # visualize(BB, a)
 
     # print a
