@@ -14,7 +14,7 @@ def BFS(startboard):
     solutions = []
     gamelist = []
 
-
+    statespace = 0
     while not queue.empty():
         game = queue.get(0)
         last_board = game[-1]
@@ -23,6 +23,7 @@ def BFS(startboard):
             for car in last_board.gamestate:
                 moves = last_board.check_moveability(car)
                 for pos in moves:
+                    statespace +=1
                     new_board = last_board.move_auto(car, pos)
                     new_game = list(game)
                     new_game.append(new_board)
@@ -30,13 +31,13 @@ def BFS(startboard):
                     if car.color == 'red':
                         if new_board.gamestate[car][-1] == last_board.exit:
                             solutions.extend(new_game)
-                            return solutions
+    return statespace
 
 
 if __name__ == "__main__":
     start_time = time.clock()
 
-    game = "game3.txt"
+    game = "game2.txt"
     # game = ".txt"
     dim, gs, em, ex = load_game(game)
 
@@ -51,7 +52,8 @@ if __name__ == "__main__":
     # print a
 
     # visualize(BB, [BB])
-    print ("Puzzle was solved in %d states.") % (len(a) - 1)
+    # print ("Puzzle was solved in %d states.") % (len(a) - 1)
+    print "sp: ", a
     total_time = time.clock() - start_time
     print ("[-----Finished in %.3f seconds]") % total_time
 

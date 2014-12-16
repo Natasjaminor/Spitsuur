@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     game = "game1.txt"
     # game = ".txt"
-    dim, pd, ex, ad = load_game(game)
+    dim, pd, ex, ad, cars = load_game(game)
 
     BB = Board(dim,pd,ex,ad)
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         # board.update(solutions)
         board.done()
 
-    visualize(a)
+    # visualize(a)
 
     # print a
     # print type(a[1]), "a"
