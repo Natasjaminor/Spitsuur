@@ -18,7 +18,6 @@ class BoardVisualization:
         self.canvas.pack()
         self.master.update()
 
-        
         self.tiles = {}
         for i in range(width):
             for j in range(height):
@@ -49,16 +48,19 @@ class BoardVisualization:
 
     def _draw_cars(self, begin_x,begin_y,end_x,end_y, length, direction, color):
         x1,y1 = self._map_coords(begin_x,begin_y)
-        x2,y2 = self._map_coords(end_x, end_y)
-       
+
+        if direction == 'h':
+            x2,y2 = self._map_coords(begin_x + length, begin_y + 1)
+        else:
+            x2,y2 = self._map_coords(begin_x + 1, begin_y + length)
         return self.canvas.create_rectangle(x1, y1, x2, y2, fill = color, outline ="black")
 
     def new_random_color(self):
         return "#"+str(random.randrange(100000,999999))
 
-    def update(self, gamestate):
-        for i in gamestate:
-            game = i.gamestate
+    def update(self, solutions):
+        for i in solutions:
+            game = i.auto_dict
 
             #delete existing cars
             if self.cars != None:

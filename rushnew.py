@@ -274,7 +274,7 @@ def load_game(gamefilename):
     exit_pos = (board_dimensions - 1, exit - 1)
     # print "ex:",exit_pos
     print ("LOADING FILE in %.3f seconds") % (time.clock() - t1)
-    return board_dimensions, pos_dict,exit_pos, gamestate
+    return board_dimensions, pos_dict,exit_pos, gamestate,car_list
 
 
 if __name__ == "__main__":

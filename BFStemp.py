@@ -1,6 +1,7 @@
 import time
 from rushnew import *
 import copy
+import rushvisuatemp
 import Queue
 
 def BFS(startboard):
@@ -29,7 +30,6 @@ def BFS(startboard):
                     queue.put(new_game)
                     if car.color == 'red':
                         if new_board.auto_dict[car][-1] == last_board.exit:
-                            print "FOUND"
                             solutions.extend(new_game)
                             return solutions
 
@@ -43,7 +43,21 @@ if __name__ == "__main__":
     BB = Board(dim,pd,ex,ad)
 
     a = BFS(BB)
-    # visualize(BB, a)
+
+    def visualize(solutions):
+        first_board = solutions[0]
+        gamestate = []
+        width = int(first_board.dimensions)
+        height = int(first_board.dimensions)
+        board = rushvisuatemp.BoardVisualization(width, height)
+
+        for i in solutions:
+            # gamestate.append(i)
+            board.update([i])
+        # board.update(solutions)
+        board.done()
+
+    visualize(a)
 
     # print a
     # print type(a[1]), "a"
