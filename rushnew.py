@@ -9,7 +9,7 @@ class Board(object):
 	Represents a board with moveable car objects (auto) and an exit.
 	"""
 
-    def __init__(self, dimensions, gamestate, car_list, exit_pos):
+    def __init__(self, dimensions, pos_dict, exit_pos, auto_dict):
         """
 	  Initializes the board with its dimensions. The initial
 	  gamestate,exit and emptyfields are stored.
@@ -20,122 +20,132 @@ class Board(object):
 
 	  """
         self.dimensions = dimensions
-        self.gamestate = gamestate
+        self.pos_dict = pos_dict
+        self.auto_dict = auto_dict
         self.exit = exit_pos
-        self.cars = car_list
-        self.directions_list = [self.check_left, self.check_right, self.check_up, self.check_down]
-        self.directions_strings = ["left", "right", "up", "down"]
+
+        self.checks_dict = {"left":self.check_left,"right": self.check_right,
+                       "up": self.check_up, "down": self.check_down}
 
     def check_up(self, car):
+        pos = self.auto_dict[car][0] #head
+        pos = self.get_up(pos)
         if car.direction != "v":
             return False, None
-        if car.y[0] - 1 < 0:
+        if pos == None:
             return False, None
-        pos = (car.x, car.y[0] - 1)
-        if self.gamestate[pos] == 0:
+        if self.pos_dict[pos] == 0:
             return True, None
-        return False, self.gamestate[pos]  # Car is blocked by a car
+        return False, self.pos_dict[pos]  # Car is blocked by a car
 
     def check_down(self, car):
+        pos = self.auto_dict[car][-1] #tail
+        pos = self.get_down(pos)
         if car.direction != "v":
             return False, None
-        if car.y[-1] + 1 > self.dimensions:
+        if pos == None:
             return False, None
-        pos = (car.x, car.y[-1] + 1)
-        if self.gamestate[pos] == 0:
+        if self.pos_dict[pos] == 0:
             return True, None
-        return False, self.gamestate[pos]  # Car is blocked by a car
+        return False, self.pos_dict[pos]  # Car is blocked by a car
 
     def check_left(self, car):
+        pos = self.auto_dict[car][0] #head
+        pos = self.get_left(pos)
         if car.direction != "h":
             return False, None
-        if car.x[0] - 1 < 0:
+        if pos == None:
             return False, None
-        pos = (car.x[0] - 1, car.y)
-        if self.gamestate[pos] == 0:
+        if self.pos_dict[pos] == 0:
             return True, None
-        return False, self.gamestate[pos]  # Car is blocked by a car
+        return False, self.pos_dict[pos]  # Car is blocked by a car
 
     def check_right(self, car):
+        pos = self.auto_dict[car][-1] #tail
+        pos = self.get_right(pos)
         if car.direction != "h":
             return False, None
-        if car.x[-1] + 1 > self.dimensions:
+        if pos == None:
             return False, None
-        pos = (car.x[-1] + 1, car.y)
-        if self.gamestate[pos] == 0:
+        if self.pos_dict[pos] == 0:
             return True, None
-        return False, self.gamestate[pos]  # Car is blocked by a car
+        return False, self.pos_dict[pos]  # Car is blocked by a car
 
     def check_moveability(self, car):
         moves = []
         blocking = []
 
         # Check if a car can move left,right,up,down:
-        for i in self.directions_list:
-            result, blocked_by = i(car)
+        for i in self.checks_dict:
+            f = self.checks_dict[i]
+            result, blocked_by = f(car)
             if result:
-                moves.append(self.directions_strings[self.directions_list.index(i)])
+                moves.append(i)
             if blocked_by != None:
                 blocking.append(blocked_by)
 
         return moves, blocking
 
+    def get_up(self, pos):
+        posx = pos[0]
+        posy = pos[1]
+        if posy > 0:
+            return (posx, posy - 1)
+
+    def get_down(self, pos):
+        posx = pos[0]
+        posy = pos[1]
+        if posy < self.dimensions - 1:
+            return (posx, posy + 1)
+
+    def get_left(self, pos):
+        posx = pos[0]
+        posy = pos[1]
+        if posx > 0:
+            return posx - 1, posy
+
+    def get_right(self, pos):
+        posx = pos[0]
+        posy = pos[1]
+        if posx < self.dimensions - 1:
+            return (posx + 1, posy)
 
     def move(self,auto,movestring):
-        if movestring == "up" or movestring == "left":
-            change = -1
-        else:
-            change = 1
-        if auto.get_direction == "h":
-            if movestring == "left":
-                # remove tail, add new head (gamestate)
-                pos = (auto.x[-1],auto.y)
-                self.gamestate[pos] = 0
-                pos = (auto.x[0]-1,auto.y)
-                self.gamestate[pos] = auto
-            else:
-                # remove head, add new tail (gamestate)
-                pos = (auto.x[0],auto.y)
-                self.gamestate[pos] = 0
-                pos = (auto.x[-1]+1,auto.y)
-                self.gamestate[pos] = auto
-            for i in range(len(auto.x)):
-                auto.x[i] += change
+        do_dict= {"left":self.get_left, "right":self.get_right,
+                  "up": self.get_up, "down":self.get_down}
+        pd = self.pos_dict.copy()
+        ad = self.auto_dict.copy()
+        positions = ad[auto]
+        new_positions =[]
+        for p in positions:
+            v = do_dict[movestring]
+            v = v(p)
+            new_positions.append(v)
+            pd[p] = 0
+        for p in new_positions:
+            pd[p] = auto.ID
 
-        else:
-            if movestring == "up":
-                # remove tail, add new head (gamestate)
-                pos = (auto.x,auto.y[-1])
-                self.gamestate[pos] = 0
-                pos = (auto.x,auto.y[0]-1)
-                self.gamestate[pos] = auto
-            else:
-                # remove head, add new tail (gamestate)
-                pos = (auto.x,auto.y[0])
-                self.gamestate[pos] = 0
-                pos = (auto.x,auto.y[-1]+1)
-                self.gamestate[pos] = auto
-            for i in range(len(auto.y)):
-                auto.y[i] += change
+        ad[auto] = tuple(new_positions)
+        return Board(self.dimensions,pd,self.exit,ad)
 
-    def get_cars(self):
-        return self.cars
+    def get_pos_tuple(self):
+        return tuple(self.pos_dict.items())
 
-    def get_gamestate_tuple(self):
-        return tuple(self.gamestate.values())
+    def get_auto_tuple(self):
+        return tuple(self.auto_dict.values())
 
     def is_empty(self, pos):
         # Returns True if a position is empty, False if it is taken.
-        return self.gamestate[pos] == 0
+        return self.pos_dict[pos] == 0
 
     def __repr__(self):
-        return str(self.gamestate) + "\n"
+        return str(self.pos_dict) + "\n"
 
     def __eq__(self, other):
-        return self.gamestate == other.gamestate
+        return self.pos_dict == other.pos_dict
 
     def __hash__(self):
-        return self.get_gamestate_tuple().__hash__()
+        return self.get_pos_tuple().__hash__()
 
 
 class Auto:
@@ -144,8 +154,6 @@ class Auto:
         self.direction = direction
         self.color = color
         self.ID = ID
-        self.x = None
-        self.y = None
 
     def get_direction(self):
         return self.direction
@@ -221,7 +229,7 @@ def load_game(gamefilename):
     car_list = []
     pos_dict = {}
 
-    car_id = 0
+    car_id = 1
 
     for line in inputFile:
         line_elements = line.strip()
@@ -255,7 +263,7 @@ def load_game(gamefilename):
             for i in taken_positions:
                 pos_dict[i] = car.ID
             set_auto_pos(taken_positions, car)
-            print "car:", car_id
+            # print "car:", car_id
             for i in taken_positions:
                 empty_pos.remove(i)
 
@@ -264,26 +272,26 @@ def load_game(gamefilename):
     else:
         exit = board_dimensions / 2 + 1
     exit_pos = (board_dimensions - 1, exit - 1)
-    print "ex:",exit_pos
+    # print "ex:",exit_pos
     print ("LOADING FILE in %.3f seconds") % (time.clock() - t1)
-    return board_dimensions, pos_dict,exit_pos, car_list
+    return board_dimensions, pos_dict,exit_pos, gamestate
 
 
 if __name__ == "__main__":
 
     game = "game_new.txt"
-    dim, gs, ex,car_list = load_game(game)
+    dim, pd, ex,car_list,ad = load_game(game)
     print car_list
 
-    BB = Board(dim, gs, car_list, ex)
-    c = car_list[2]
-    print c.direction, c.x, c.y
-    m, b = BB.check_moveability(c)
-    print m
-    print b
-    BB.move(c,m[0])
-    print c.direction, c.x, c.y
-    m, b = BB.check_moveability(c)
-    print m
-    print b
-    # lalala
+    # BB = Board(dim,pd,ex,ad)
+    # c = car_list[2]
+    # print c.direction, c.x, c.y
+    # m, b = BB.check_moveability(c)
+    # print m
+    # print b
+    # BB.move(c,m[0])
+    # print c.direction, c.x, c.y
+    # m, b = BB.check_moveability(c)
+    # print m
+    # print b
+    # # lalala
