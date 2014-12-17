@@ -1,5 +1,6 @@
 
 from rushnew import *
+import rushvisuatemp
 import copy
 from Queue import PriorityQueue
 import time
@@ -69,17 +70,53 @@ def calctotalcost(board, goal, distance, car_list):
             c = car_list[value-1]
             m,b = board.check_moveability(c)
             conflict_cost += len(b) # Tell alle blokkades van de auto op bij de cost
+            for j in b:
+                prev_id = value
+                car = car_list[j-1]
+                conflict_cost += calculate_blocks(board,car,[prev_id])
+                print conflict_cost
 
-
+    print conflict_cost
     totalcost = manhattendistance + cars_cost+ conflict_cost + distance
     return totalcost
 
 
+def calculate_blocks(board,car,prev_id_list):
+    conflicts = 0
+    m,b = board.check_moveability(car)
+    if len(b)-1>0:
+        conflicts +=1
+        for i in b:
+            if not (i in prev_id_list):
+                prev_id_list.append(i)
+                conflicts += calculate_blocks(board,car,prev_id_list)
+            else:
+                conflicts +=1
+        return conflicts
+    return 1
+
+
+def visualize(solutions):
+    first_board = solutions[0]
+    gamestate = []
+    width = int(first_board.dimensions)
+    height = int(first_board.dimensions)
+    board = rushvisuatemp.BoardVisualization(width, height)
+
+    for i in solutions:
+        # gamestate.append(i)
+        board.update([i])
+        # board.update(solutions)
+    board.done()
+
 if __name__ == "__main__":
     start_time = time.clock()
-    game = "game5.txt"
+    game = "game1.txt"
     dim, pd, ex, ad, cars = load_game(game)
     BB = Board(dim,pd,ex,ad)
+
+    calctotalcost(BB,ex,0,cars)
+    # visualize([BB])
     a = solveAStar(BB, ex,cars)
 
     print ("Puzzle was solved in %d states.") % (len(a) - 1)

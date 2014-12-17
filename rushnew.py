@@ -279,11 +279,12 @@ def load_game(gamefilename):
 
 if __name__ == "__main__":
 
-    game = "game_new.txt"
-    dim, pd, ex,car_list,ad = load_game(game)
+    game = "game_small.txt"
+    dim, pd, ex,ad, cars = load_game(game)
     print car_list
 
-    # BB = Board(dim,pd,ex,ad)
+    BB = Board(dim,pd,ex,ad)
+    visualize
     # c = car_list[2]
     # print c.direction, c.x, c.y
     # m, b = BB.check_moveability(c)
