@@ -1,3 +1,4 @@
+import time
 from rush import *
 import copy
 from Queue import PriorityQueue
@@ -56,9 +57,12 @@ def calctotalcost(node, goal, distance):
 	return totalcost
 
 		
-
-game = "game2.txt"
+start_time = time.clock()
+game = "game1.txt"
 dim, gs, em, ex = load_game(game)
 BB = Board(dim, gs, em, ex)
 a = solveAStar(BB, ex)
-print len(a)
+
+print ("Puzzle was solved in %d states.") % (len(a) - 1)
+total_time = time.clock() - start_time
+print ("[-----Finished in %.3f seconds]") % total_time

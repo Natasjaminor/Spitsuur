@@ -56,6 +56,7 @@ def solveAStar(startboard, goal, cars):
 def calctotalcost(board, goal, distance, car_list):
     cars_cost = 0
     conflict_cost = 0
+    prev_id_list = []
 
     game = board.auto_dict
     dim = board.dimensions
@@ -64,30 +65,37 @@ def calctotalcost(board, goal, distance, car_list):
     manhattendistance = goal[0] - rx
 
     for i in range(1,dim-rx-1):
-        value = pd[(rx+i,ry)]
-        if value != 0:
+        car_id = pd[(rx+i,ry)]
+        if car_id != 0:
             cars_cost += 1
-            # car = car_list[value-1]
-            # m,b = board.check_moveability(car)
-            # conflict_cost += len(b)
-    totalcost = manhattendistance + cars_cost+ distance
+
+            car = car_list[car_id-1]
+            prev_id_list.append(car_id)
+            # print "id: ", prev_id_list
+            conflict_cost += calculate_blocks(board,car,car_list,prev_id_list)
+
+    # print "conflict cost:", conflict_cost
+
+    totalcost = manhattendistance + (conflict_cost) + distance
     return totalcost
 
 
-def calculate_blocks(board,car,prev_id_list):
+def calculate_blocks(board,car,car_list,prev_id_list):
     conflicts = 0
-    m,b = board.check_moveability(car)
-    if len(b)-1>0:
+    m, b = board.check_moveability(car)
+    # print car
+    # print board.auto_dict[car]
+    # print "check down: ", board.check_down(car)
+    # print "blokked by: ", b
+    # print board.pos_dict[(4,4)]
+    for i in b:
         conflicts +=1
-        for i in b:
-            if not (i in prev_id_list):
-                prev_id_list.append(i)
-                conflicts += calculate_blocks(board,car,prev_id_list)
-            else:
-                conflicts +=1
-        return conflicts
-    return 0
-
+        if i in prev_id_list:
+            continue
+        prev_id_list.append(i)
+        car = car_list[i-1]
+        conflicts += calculate_blocks(board,car,car_list,prev_id_list)
+    return conflicts
 
 def visualize(solutions):
     first_board = solutions[0]
@@ -104,7 +112,7 @@ def visualize(solutions):
 
 if __name__ == "__main__":
     start_time = time.clock()
-    game = "game4.txt"
+    game = "game3.txt"
     dim, pd, ex, ad, cars = load_game(game)
     BB = Board(dim,pd,ex,ad)
 

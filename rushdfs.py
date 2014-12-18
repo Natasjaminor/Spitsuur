@@ -80,7 +80,7 @@ def bruteDFS(startboard, gameset, gamelist, solutions):
 			#return solutions
 
 if __name__ == '__main__':
-	game = "GAME1.txt"
+	game = "game_new.txt"
 	dim, gs, em, ex = load_game(game)
 
 	BB = Board(dim, gs, em, ex)
