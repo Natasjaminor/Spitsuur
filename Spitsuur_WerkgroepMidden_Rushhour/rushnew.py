@@ -1,5 +1,5 @@
 import time
-# import rushvisua
+import rushvisuatemp
 
 # Gamestate will be pos_dict pos as key
 # value is 0 if no car is in it
@@ -263,7 +263,6 @@ def load_game(gamefilename):
             for i in taken_positions:
                 pos_dict[i] = car.ID
             set_auto_pos(taken_positions, car)
-            # print "car:", car_id
             for i in taken_positions:
                 empty_pos.remove(i)
 
@@ -272,7 +271,6 @@ def load_game(gamefilename):
     else:
         exit = board_dimensions / 2 + 1
     exit_pos = (board_dimensions - 1, exit - 1)
-    # print "ex:",exit_pos
     print ("LOADING FILE in %.3f seconds") % (time.clock() - t1)
     return board_dimensions, pos_dict,exit_pos, gamestate,car_list
 
@@ -285,14 +283,3 @@ if __name__ == "__main__":
 
     BB = Board(dim,pd,ex,ad)
     visualize
-    # c = car_list[2]
-    # print c.direction, c.x, c.y
-    # m, b = BB.check_moveability(c)
-    # print m
-    # print b
-    # BB.move(c,m[0])
-    # print c.direction, c.x, c.y
-    # m, b = BB.check_moveability(c)
-    # print m
-    # print b
-    # # lalala

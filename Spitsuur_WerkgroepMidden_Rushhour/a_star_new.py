@@ -97,19 +97,19 @@ def visualize(solutions):
     board = rushvisuatemp.BoardVisualization(width, height)
 
     for i in solutions:
-        # gamestate.append(i)
+        gamestate.append(i)
         board.update([i])
-        # board.update(solutions)
+        board.update(solutions)
     board.done()
 
 if __name__ == "__main__":
     start_time = time.clock()
-    game = "game4.txt"
+    game = "game3.txt"
     dim, pd, ex, ad, cars = load_game(game)
     BB = Board(dim,pd,ex,ad)
 
     calctotalcost(BB,ex,0,cars)
-    # visualize([BB])
+    visualize([BB])
     a = solveAStar(BB, ex,cars)
 
     print ("Puzzle was solved in %d states.") % (len(a) - 1)

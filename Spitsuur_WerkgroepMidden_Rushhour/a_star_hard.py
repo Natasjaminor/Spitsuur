@@ -71,10 +71,7 @@ def calctotalcost(board, goal, distance, car_list):
 
             car = car_list[car_id-1]
             prev_id_list.append(car_id)
-            # print "id: ", prev_id_list
             conflict_cost += calculate_blocks(board,car,car_list,prev_id_list)
-
-    # print "conflict cost:", conflict_cost
 
     totalcost = manhattendistance + (conflict_cost) + distance
     return totalcost
@@ -83,11 +80,6 @@ def calctotalcost(board, goal, distance, car_list):
 def calculate_blocks(board,car,car_list,prev_id_list):
     conflicts = 0
     m, b = board.check_moveability(car)
-    # print car
-    # print board.auto_dict[car]
-    # print "check down: ", board.check_down(car)
-    # print "blokked by: ", b
-    # print board.pos_dict[(4,4)]
     for i in b:
         conflicts +=1
         if i in prev_id_list:
@@ -105,9 +97,9 @@ def visualize(solutions):
     board = rushvisuatemp.BoardVisualization(width, height)
 
     for i in solutions:
-        # gamestate.append(i)
+        gamestate.append(i)
         board.update([i])
-        # board.update(solutions)
+        board.update(solutions)
     board.done()
 
 if __name__ == "__main__":
@@ -117,7 +109,7 @@ if __name__ == "__main__":
     BB = Board(dim,pd,ex,ad)
 
     calctotalcost(BB,ex,0,cars)
-    # visualize([BB])
+    visualize([BB])
     a = solveAStar(BB, ex,cars)
 
     print ("Puzzle was solved in %d states.") % (len(a) - 1)
